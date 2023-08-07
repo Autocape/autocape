@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocape</title>
+    <link rel="icon" type="image/x-icon" href="https://slashonline.net/media/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            background-color: #252526;
+            color: #fff;
+            font-family: 'popins', sans-serif;
+            
+        }
+        .headder{
+            height: 80px;
+            width: calc(100% - 30px);
+            margin: 15px;
+            background-color: #1d1d1d;
+            border-radius: 12px;
+            padding: 0px;
+        }
+        .logo{
+            margin-top: 15px;
+            height: 100%;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .textsegement{
+            height: 50px;
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 15px;
+            
+        }
+        .page {
+            width: calc(100% - 50px);
+            margin: 15px;
+            background-color: #1d1d1d;
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .welcometext {
+            font-size: 30px;
+            margin: auto;
+            text-align: center;
+
+            
+
+        }
+        input[type="file"] {
+        display: none;
+        }
+        .imageselector {
+            margin: auto;
+            display: block;
+            margin-top: 20px;
+            width: 500px;
+            height: 50px;
+        }
+        .custom-file-upload {
+            margin: auto;
+            display: block;
+            margin-top: 20px;
+            width: 500px;
+            height: 50px;
+            background-color: #272727;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="headder">
+        <div class="logo">
+            <a href="https://cloaks.lol/autocape">
+            <img src="https://slashonline.net/media/autocape.png" alt="Cloaks.lol Logo" height="50">
+        </a>
+        </div>
+        
+    </div>
+    <div class="page">
+        <div class="welcometext">
+            Welcome to Autocape!
+            Start by selecting an image
+        </div>
+        <label class="custom-file-upload" id="uisw">
+            <div id="uploadingtext" style="visibility: hidden;">Uploading...</div>
+            <div id="uploadingtextb" >Click here to selct a File</div>
+        <input class="imageselector" id="selectors" type="file" accept="image/png">
+        </label>
+    </div>
+
+    <script>
+        const uis = document.getElementById("uisw");
+        const uist = document.getElementById("uploadingtext");
+        const uistb = document.getElementById("uploadingtextb");
+        const inputElement = document.getElementById("selectors");
+        inputElement.addEventListener("change", handleFiles, false);
+
+        function uploadchunk() {
+                var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("POST", "http://localhost:3000/upload/uploadchunk?chunkindex=" + base64chunks[index] + "&uploadid=" + uploadid , true);
+                                    //ser body to chunk
+                                    
+                                    xhr2.send(base64chunks[index]);
+                                    xhr2.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            var response2 = this.responseText;
+                                            console.log(response2);
+                                            if(response2 == "ok:chunkuploaded"){
+                                                
+                                                done = true;
+                                            }
+                                            else{
+                                                uist.innerHTML = "Error Uploading Chunk!";
+                                                uist.style.color = "red";
+                                                uist.style.animation = "shake 0.5s";
+                                                return;
+                                            }
+                                        }
+            }
+        }
+
+        function handleFiles() {
+            const fileList = this.files; /* now you can work with the file list */
+            console.log(fileList);
+            uist.style.visibility = "visible";
+            uistb.style.visibility = "hidden";
+            uist.innerHTML = "Uploading...";
+            uist.style.color = "white";
+
+            //check if there even is a file
+            if(fileList.length == 0){
+                
+                uist.style.visibility = "visible";
+                uistb.style.visibility = "visible";
+                uist.innerHTML = "No file selected!";
+                uist.style.color = "red";
+                uist.style.animation = "shake 0.5s";
+                return;
+            }
+            //check if file is under 3mb
+            if(fileList[0].size > 3000000){
+                
+                uist.style.visibility = "visible";
+                uistb.style.visibility = "visible";
+                uist.innerHTML = "File is too big! (Max 3MB)";
+                uist.style.color = "red";
+                uist.style.animation = "shake 0.5s";
+                return;
+            }
+        
+            //check if file is png
+            if(fileList[0].type != "image/png"){
+                
+                uist.style.visibility = "visible";
+                uistb.style.visibility = "visible";
+                uist.innerHTML = "File is not a png!";
+                uist.style.color = "red";
+                uist.style.animation = "shake 0.5s";
+                return;
+            }
+        
+            
+
+
+            //convert file to base64
+            var reader = new FileReader();
+            reader.readAsDataURL(fileList[0]);
+            reader.onload = function () {
+                var base64 = reader.result;
+                console.log(base64);
+                //split base64 into 100kb chunks
+                base64chunks = [];
+                var i,j,temparray,chunk = 50000;
+                for (i=0,j=base64.length; i<j; i+=chunk) {
+                    temparray = base64.substring(i,i+chunk);
+                    base64chunks.push(temparray);
+                }
+                console.log(base64chunks);
+                uist.innerHTML = "Announcing Upload...";
+                //webrequest to announce upload
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:3000/upload/announce?chunkcount=" + base64chunks.length , true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        
+                        var response = this.responseText;
+                        console.log(response);
+                        uist.innerHTML = "Uploading...";
+                        //remove ok: from respomse to get uploadid
+                        var uploadid = response.replace("ok:", "");
+
+                        
+                        done = true;
+                        index = 0;
+                        chunkslength = base64chunks.length + 1;
+                        // code that uploads chunk by chunk but waits for the previous chunk to be uploaded before uploading the next one
+                        while (index < chunkslength) {
+                                console.log("loop uploading chunk " + index);
+                                if (done == false){
+                                    console.log("waiting for chunk " + index);
+                                    continue;
+                                }
+                                else if(done == true) {
+                                    done = false;
+                                    console.log("uploading chunk " + index);
+                                    var xhr2 = new XMLHttpRequest();
+                                    xhr2.open("POST", "http://localhost:3000/upload?chunkindex=" + index + "&uploadid=" + uploadid , true);
+                                    //ser body to chunk
+                                    
+                                    xhr2.send(base64chunks[index]);
+                                    xhr2.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            var response2 = this.responseText;
+                                            console.log(response2);
+                                            if(response2 == "ok:chunkuploaded"){
+                                                console.log("chunk uploaded" + index)
+                                                index = index + 1;
+                                                console.log("uploading chunk " + index);
+                                                done = true;
+                                            }
+                                            else{
+                                                uist.innerHTML = "Error Uploading Chunk!";
+                                                uist.style.color = "red";
+                                                uist.style.animation = "shake 0.5s";
+                                                return;
+                                            }
+                                        }
+                                    };
+                                }
+
+
+                                
+                    
+                            };
+                    }
+                        
+                    
+                };
+
+                
+                
+            };
+        }
+    </script>
+</body>
+</html>
