@@ -1,36 +1,41 @@
 const sharp = require('sharp');
 const axios = require('axios');
-const buffer = require('buffer');
-const bp = require('body-parser')
-const sqlite3 = require('sqlite3').verbose();
+const multer = require('multer');
 const fs = require('fs');
-// digga fuck u bruh 
-
-
-let db = new sqlite3.Database('./db/upload.db', (err) => {
-    if (err) {
-      console.error(err.message);
-    }
-    console.log('Connected to the upload database.');
-  });
-
-// db.run("CREATE TABLE upload(id text, chunks text, uploadedon text)")
 const express = require('express');
 const cors = require('cors');
+var fullfilename = "cleared for security reasons"
+const config = require('./config.json');
 
-var options = {
-    inflate: true,
-    limit: '100kb',
-    type: 'text/plain'
-  };
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      //make directory with id
+      idirecotry = makeid(25) + Date.now();
+      fs.mkdirSync('uploads/' + idirecotry);
+      cb(null, 'uploads/' + idirecotry);
+    },
+    filename: (req, file, cb) => {
+        fileids = makeid(10)
+        fullfilename = idirecotry + "/" + fileids + ".png"
+      cb(null, fileids + ".png");
+
+    }
+  });
+  
+  
+  // Create the multer instance
+  const upload = multer({ storage: storage });
+
+
 const app = express();
 app.use(cors());
-app.use(bp.raw(options))
-app.use(bp.urlencoded({ extended: true }))
 const port = 3000;
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/cloakslol/index.html');
+    res.redirect("cloaksplus.com")
+    // res.sendFile(__dirname + '/cloakslol/index.html');
 });
 
 app.get('/chart', (req, res) => {
@@ -54,115 +59,49 @@ app.get('/autocape', async (req, res) => {
     res.sendFile(__dirname + "/cloakslol/autocape.html")
 })
 
-app.get('/autocape', async (req, res) => {
-    // return autocape app
-    res.sendFile(__dirname + "/cloakslol/autocape.html")
-})
+
 
 app.get('/upload/announce', async (req, res) => {
-    const uploadid = makeid(50);
-    const chunkcount = req.query.chunkcount;
-    const currentDate = new Date();
-    const timestamp = currentDate.getTime();
-
-    if (chunkcount == null) {
-        //chnage status code to 40
-        res.status(400)
-        res.send('err:nochunksprovided' )
-        return;
-    }
-    // check if chunkcount is a number
-    if (isNaN(chunkcount)) {
-        res.status(400)
-        res.send('err:chunkcountnotanumber')
-        return;
-    }
-
-    db.run(`INSERT INTO upload (id, chunks, uploadedon) VALUES ("` + uploadid + `", "` + chunkcount + `", "` + timestamp + `");`, function(err) {
-        if (err) {
-          return console.log(err.message);
-        }
-        // get the last insert id
-        res.send("ok:" + uploadid)
-      });
+    
 })
 
 app.get('/upload', async (req, res) => {
     res.send("you dont GET it ;)")
 })
 
-app.post('/upload', async (req, res) => {
-    chunkindex = req.query.chunkindex;
-    uploadid = req.query.uploadid;
-    chunk = req.body;
-    console.log(chunk)
-    if (chunkindex == null) {
-        res.status(400)
-        res.send('err:noindexprovided')
-        return;
-    }
-    if (uploadid == null) {
-        res.status(400)
-        res.send('err:nouploadidprovided')
-        return;
-    }
-    if (chunk == null) {
-        res.status(400)
-        res.send('err:nodataprovided')
-        return;
-    }   
-    if (chunk == "{}") {
-        res.status(400)
-        res.send('err:u fucked up')
-        return;
-    }
-    // check if chunkindex is a number
-    if (isNaN(chunkindex)) {
-        res.status(400)
-        res.send('err:chunkindexnotanumber')
-        return;
-    }
-    // check if uploadid is in database
-    db.get(`SELECT * FROM upload WHERE id = "` + uploadid + `"`, function(err, row) {
-        if (err) {
-            return console.log(err.message);
-        }
-        if (row == null) {
-            res.send('err:uploadidnotfound')
-            return;
-        }
-        else {
-            // uploadid found
-            
-            if (chunkindex > row.chunks) {
-                res.send('err:chunkindexinvalid')
-                return;
-            }
-            else if (chunkindex == row.chunks) {
-                res.send('done')
-                return;
-            }
-            else {
-                // chunkindex valid
-                // write chunk to file
-                try {
-                    if (!fs.existsSync('./storage/' + uploadid)) {
-                      fs.mkdirSync('./storage/' + uploadid);
-                    }
-                    fs.writeFileSync('./storage/' + uploadid + '/' + chunkindex + '.chunk', chunk);
-                    res.send('ok:chunkuploaded')
-                  } catch (err) {
-                    console.error(err);
-                  }
-            }
-        }
-    });
+app.post('/upload', upload.single('file'), (req, res) => {
+    // Handle the uploaded file
+    res.json({ path: fullfilename });
+    fullfilename = "cleared for security reasons"
+  });
 
+app.get("/media/:id/:filename", async (req, res) => {
+    const id = req.params.id;
+    const filename = req.params.filename;
 
+    if (id == null || filename == null) {
+        res.send("err:malfomedrequest")
+        return;
+    }
+
+    const file = __dirname + "/uploads/" + id + "/" + filename;
+    console.log(file)
+    if (fs.existsSync(file)) {
+        res.sendFile(file)
+    }
+    else {
+        res.send("err:404requestedresourcenotfound")
+
+    }
+    
+        
 })
 
 app.get('/ui/resize', async (req, res) => {
     res.sendFile(__dirname + "/cloakslol/resizerui.html")
+})
+app.get('/challange', async (req, res) => {
+    res.sendFile(__dirname + "/cloakslol/challange.html")
 })
 
 app.get('/removebg', async (req, res) => {
@@ -198,6 +137,17 @@ app.get('/removebg', async (req, res) => {
     }
 });
 
+
+app.get("/validate", async (req, res) => {
+    token = req.query.token;
+    if (token == null) {
+        res.send("err:tokennotfound")
+        return;
+    }
+    
+        
+})
+
 app.get('/makecape', async (req, res) => {
     baseimagelocation = req.query.img;
     if (baseimagelocation == null) {
@@ -213,7 +163,7 @@ app.get('/makecape', async (req, res) => {
                 const outputBuffer = await checkaspectratio(response.data)
                 
                     if (outputBuffer == "err:toolarge") {
-                        res.send('err:toolarge')
+                        res.redirect("https://dev.cloaks.lol/ui/resize?img=" + baseimagelocation)
                     }
                     else {
                         res.setHeader('Content-Type', 'image/png');
@@ -258,28 +208,55 @@ async function checkaspectratio(imagelocation) {
     const width = metadata.width;
     const height = metadata.height;
     const format = metadata.format;
-    const aspectratio = width / height;
+    var aspectratio = width / height;
+    console.log(aspectratio)
+    aspectratio = Math.round(aspectratio * 1000) / 1000;
+    console.log(aspectratio)
     if (aspectratio == 0.625) {
         console.log('correct aspect ratio')
         if (format == 'png') {
+            
+                const versions = config.version
+                //draw version number as text
+                const width = 2048;
+                const height = 1024;
+                const svgImage = `
+                <svg width="${width}" height="${height}">
+                  <style>
+                  .title { fill: #FF0000; font-size: 15px; font-weight: bold;}
+                  </style>
+                  <text font-family="Arial, Helvetica, sans-serif" x="5px" y="900px" class="title">${versions}</text>
+                  <text font-family="Arial, Helvetica, sans-serif" x="5px" y="920px" class="title">[AUTOCAPE DEBUG]</text>
+                  <text font-family="Arial, Helvetica, sans-serif" x="5px" y="940px" class="title">IMGURL:${baseimagelocation}</text>
+                  <text font-family="Arial, Helvetica, sans-serif" x="5px" y="960px" class="title">format:${format}</text>
+                    <text font-family="Arial, Helvetica, sans-serif" x="5px" y="980px" class="title">captcha:true</text>
+                    
+                    
+
+                </svg>
+                `;
+                svgBuffera = Buffer.from(svgImage);
+            
             const outputBuffer = await sharp(imagelocation)
                 .resize(320, 512)
                 .toBuffer();
-            const overlayBuffer = await sharp('template.png')
+            var overlayBuffer = await sharp('template.png')
+                
                 .composite([{ input: outputBuffer, top: 32, left: 32 }])
+                
+                
+                .toBuffer();
+            overlayBuffer = await sharp(overlayBuffer)
+                .composite([{ input: svgBuffera, top: 0, left: 0 }])
                 .toBuffer();
             return overlayBuffer;
         }
     }
     else {
-        //fix aspect ratio and then create cape
+        
         console.log('incorrect aspect ratio')
-        if (width < height) {
-            
-        }
-        else {
-          return "err:toolarge"
-        }
+        return "err:aspectratio"
+        
     }
 
 }

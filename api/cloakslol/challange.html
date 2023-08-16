@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocape</title>
+    <link rel="icon" type="image/x-icon" href="https://slashonline.net/media/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" async defer></script>
+    <style>
+        body {
+            background-color: #252526;
+            color: #fff;
+            font-family: 'popins', sans-serif;
+            
+        }
+        .headder{
+            height: 80px;
+            width: calc(100% - 30px);
+            margin: 15px;
+            background-color: #1d1d1d;
+            border-radius: 12px;
+            padding: 0px;
+        }
+        .logo{
+            margin-top: 15px;
+            height: 100%;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .textsegement{
+            height: 50px;
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 15px;
+            
+        }
+        .page {
+            width: calc(100% - 50px);
+            margin: 15px;
+            background-color: #1d1d1d;
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .welcometext {
+            font-size: 30px;
+            margin: auto;
+            text-align: center;
+
+            
+
+        }
+        input[type="file"] {
+        display: none;
+        }
+        .imageselector {
+            margin: auto;
+            display: block;
+            margin-top: 20px;
+            width: 500px;
+            height: 50px;
+        }
+        .custom-file-upload {
+            margin: auto;
+            display: block;
+            margin-top: 20px;
+            width: 500px;
+            height: 50px;
+            background-color: #272727;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="headder">
+        <div class="logo">
+            <a href="https://cloaks.lol/autocape">
+            <img src="https://slashonline.net/media/autocape.png" alt="Cloaks.lol Logo" height="50">
+        </a>
+        </div>
+        
+    </div>
+    <div class="page">
+        <div class="welcometext">
+            one moment please...
+            <p> We are Protecting our Service from Bots by having your Broswer Complete a automated challenge. </p>
+            <p id="texts"> This wont take long</p>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAIwISuAZxY2XvCR" data-callback="javascriptCallback"></div>
+        </div>
+        
+    </div>
+
+    <script>
+        //get redirect url from params
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+
+        if (redirect == null) {
+            document.getElementById("texts").innerHTML = "incorrect url! contact notfelixmax_ on discord";
+            //delete turnstile div
+            var elem = document.getElementsByClassName("cf-turnstile")[0];
+            elem.parentNode.removeChild(elem);
+        }
+
+        if (window.localStorage.getItem("consentstatus") == null || window.localStorage.getItem("consentstatus") == "false") {
+            document.getElementById("texts").innerHTML = "unable to complete challenge without consent! contact notfelixmax_ on discord this shouldnt happen";
+            //delete turnstile div
+            var elem = document.getElementsByClassName("cf-turnstile")[0];
+            elem.parentNode.removeChild(elem);
+        }
+    
+        
+        
+        function javascriptCallback(token) {
+            document.getElementById("texts").innerHTML = "Completed! returning back to application...";
+            console.log(token);
+            //redirect to application
+            window.localStorage.setItem("turntoken", token);
+            window.location.href = redirect;
+
+            
+        }
+    </script>
+</body>
+</html>
