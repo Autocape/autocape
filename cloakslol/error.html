@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocape: Error</title>
+    <link rel="icon" type="image/x-icon" href="https://slashonline.net/media/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            font-family: Popins, sans-serif;
+            font-weight: 400;
+            padding: 10px;
+        }
+        .errortext{
+            background-color: rgb(32, 32, 32);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            
+        }
+    </style>
+</head>
+<body>
+    <img src="https://media.cloaks.lol/media/7iU1OrZI1YVso7mYMs1JR6LQ21698510537679/PBbznmF5xu955.png"></img>
+    <p>sum went wrong</p>
+    <p> send the error ID below to us so we can figure out what went wrong and help you:</p>
+    <p> Please send this if you make a ticket</p>
+    <p> Error ID:</p>
+     <div class="errortext" >{{errorid}}</div>
+
+     <p> Raw Error:</p>
+     <div class="errortext" >{{error}}</div>
+    <p style="font-size: 25px;"> get support: <a href="support">cloaks.lol/support</a></p>
+    <script>
+        // var error = document.getElementsByClassName("errortext")[0];
+        // //get the error from the url
+        // const queryString = window.location.search;
+        // const urlParams = new URLSearchParams(queryString);
+        // const errora = urlParams.get('error');
+        // error.innerHTML = errora;
+    </script>
+</body>
+</html>

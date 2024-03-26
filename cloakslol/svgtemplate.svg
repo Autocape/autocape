@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1024" >
+    <path transform="translate(1024,0)"  d="M0 0H256V32H64V64H0V0Z" fill="#121713"/>
+    <path transform="translate(1088,64)"  d="M0 0H256V32H288V64H320V160H352V288H384V640H160V608H128V544H96V448H64V288H32V160V64H0V0Z" fill="#121713"/>
+    <path d="M32 0H672V32H704V352H736V703.913H704V544H32H0V32H32V0Z" fill="#121713"/>
+</svg>
