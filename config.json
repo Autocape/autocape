@@ -1,0 +1,13 @@
+{
+    "hostname": "localhost",
+    "port": 3000,
+    "portneeded": "true",
+    "version": "DEV0.0.1.5.0-R0-1694822187",
+    "isdev": "true",
+    "discordclientid": "1144794339415969792",
+    "discordsecret": "GLlINXbuBpQi0rMJ98rKWpCVFuWWdduG",
+    "redirecturi": "http://localhost:3000/authendpoint",
+    "errorwebhook": "https://discord.com/api/webhooks/1152570128936992839/MIpTDsS6sRcbmvyRjVDqA6L_lx52_GgIa7U88iCSNjO4AmuSmqd8R0SZGtzIIcn6yn4P",
+    "promowebhook": "https://discord.com/api/webhooks/1145846367126814740/cLZIiFR_Vxuwv5A67uo1ajTatnuZGlCBS2leSpNEMtOLMw0CNrtDNhFCHaz01GJm6bY1",
+    "boturl": "http://localhost:42069"
+}

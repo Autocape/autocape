@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOCAPE - Resize image</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .container {
+            max-width: 100%;
+            max-height: 80vh;
+            margin: 20px auto;
+            visibility: hidden;
+        }
+        img {
+            max-width: 100%;
+        }
+        .loadingtext {
+            margin: auto;
+            text-align: center;
+            visibility: visible;
+            position: absolute;
+        }
+        #donebutton{
+            width: 100%;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loadingtext"><img height="50" src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/svg-css/ring-resize.svg"></img> Loading... Please wait this might take a while</div>
+    <div class="container">
+        <img id="imagh" src="https://dev.cloaks.lol/media/F3J9TtcdFaICJBX3bWh2rqb7b1692132978095/hl0XEZ0XRQ.png"></img>
+    </div>
+    <input type="checkbox" id="usecolourmatch" checked></input>
+    <label for="usecolourmatch">Use colour match [EXPERIMENTAL]</label>
+    <input type="checkbox" id="usecolourmatchprom"></input>
+    <label for="usecolourmatchprom">Use prominant colour match [VERY EXPERIMENTAL]</label>
+    <input type="checkbox" id="legacycol"></input>
+    <label for="legacycol">use default background</label>
+    <button id="donebutton">Done</button>
+    <h1>JOIN THE AUTOCAPE DISCORD!!! <a href="https://discord.gg/pbncGY3GFQ">click here!!!</a></h1>
+    <script>
+        var container = document.querySelector('.container');
+        var loadingtext = document.querySelector('.loadingtext');
+        var image = document.getElementById('imagh');
+        var donebutton = document.getElementById('donebutton');
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const imgsa = urlParams.get('img');
+        const stateid = urlParams.get('stateid');
+        var isstate = false;
+
+        if (stateid != null) {
+            isstate = true;
+        }
+
+        if (imgsa == null) {
+            window.location.href = "https://dev.cloaks.lol/autocape";
+        }
+
+
+        image.src = imgsa;
+
+        var cropper = new Cropper(image, {
+            aspectRatio: 5 / 8,
+            crop(event) {
+                container.style.visibility = 'visible';
+                loadingtext.style.visibility = 'hidden';
+                console.log(event.detail.x);
+                console.log(event.detail.y);
+                console.log(event.detail.width);
+                widths = event.detail.width;
+                console.log(event.detail.height);
+                heights = event.detail.height;
+                console.log(event.detail.rotate);
+                console.log(event.detail.scaleX);
+                console.log(event.detail.scaleY);
+            },
+        });
+
+        colourmatch = document.getElementById('usecolourmatch');
+                usecolourmatchprom = document.getElementById('usecolourmatchprom');
+                legacycol = document.getElementById('legacycol');
+
+
+        colourmatch.addEventListener('change', () => {
+            if (colourmatch.checked) {
+                usecolourmatchprom.checked = false;
+                legacycol.checked = false;
+            } else {
+                
+            }
+        });
+
+        usecolourmatchprom.addEventListener('change', () => {
+            if (usecolourmatchprom.checked) {
+                colourmatch.checked = false;
+                legacycol.checked = false;
+            } else {
+                
+            }
+        });
+
+        legacycol.addEventListener('change', () => {
+            if (legacycol.checked) {
+                colourmatch.checked = false;
+                usecolourmatchprom.checked = false;
+            } else {
+                
+            }
+        });
+        
+
+
+
+        donebutton.addEventListener('click', () => {
+            
+                donebutton.innerHTML = '<img height="50" src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/svg-css/ring-resize.svg"></img>';
+                donebutton.disabled = true;
+                
+
+                if (colourmatch.checked) {
+                    colourmatch = "true";
+                }
+                else if (usecolourmatchprom.checked) {
+                    colourmatch = "prominant";
+                }
+                 else {
+                    colourmatch = "false";
+                }
+
+
+
+                canvass = cropper.getCroppedCanvas();
+                canvass.toBlob(function(blob) {
+                    var xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://media.cloaks.lol/upload", true);
+                FormDatas = new FormData();
+                FormDatas.append("file", blob, "img.png");
+                xhr.send(FormDatas);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log(xhr.responseText);
+                        jsonsa = JSON.parse(xhr.responseText);
+                        if (isstate == true) {
+                            window.location.href = "https://dev.cloaks.lol/makecape?fromeditor=true&stateid="+ stateid +"&colourmatch=" + colourmatch + "&img=https://media.cloaks.lol/media/" + jsonsa.path;
+                            
+                        } else {
+                            window.location.href = "https://dev.cloaks.lol/makecape?fromeditor=true&colourmatch=" + colourmatch + "&img=https://media.cloaks.lol/media/" + jsonsa.path;
+                        }
+                    }
+                    if (xhr.readyState == 4 && xhr.status != 200) {
+                        console.log(xhr.responseText);
+                        alert("it appears like that the processed file exceeds the 3mb limit, please try again with a smaller file or if you are unsure what to do join the support server!");
+                        donebutton.innerHTML = 'error';
+                        donebutton.disabled = true;
+                    }
+                }
+                });
+                
+                //send image to upload api
+                
+
+
+
+                
+            
+        });
+    </script>
+</body>
+</html>
