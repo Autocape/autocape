@@ -1,0 +1,13 @@
+{
+    "hostname": "localhost",
+    "port": 3000,
+    "portneeded": "true",
+    "version": "DEV0.0.1.5.0-R0-1694822187",
+    "isdev": "true",
+    "discordclientid": "1144794339415969792",
+    "discordsecret": "",
+    "redirecturi": "http://localhost:3000/authendpoint",
+    "errorwebhook": "",
+    "promowebhook": "",
+    "boturl": "http://localhost:42069"
+}
