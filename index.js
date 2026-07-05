@@ -28,6 +28,10 @@ else {
 
 var capesmade = 0;
 
+if (fs.existsSync(__dirname + "/results") == false) {
+    fs.mkdirSync(__dirname + "/results");
+}
+
 
 const app = express();
 app.use(cors());
@@ -75,9 +79,7 @@ app.get("/cape/:id", async (req, res) => {
 app.get('/resize', async (req, res) => {
     res.sendFile(__dirname + "/cloakslol/resizeruinew.html")
 })
-app.get('/challange', async (req, res) => {
-    res.sendFile(__dirname + "/cloakslol/challange.html")
-})
+
 
 
 app.get('/js/localize.js', async (req, res) => {
@@ -234,20 +236,10 @@ function replaceAll(string, search, replace) {
 
 function rendererror(err, userdisplayerror) {
     const htmldata = fs.readFileSync(__dirname + "/cloakslol/error.html", 'utf8');
+    console.error(err);
     errner = err + " @ " + Date.now()
     errorid = "Autocape:" + makeresultid(15)
-    axios.post(config.errorwebhook, {
-        "content": errorid,
-        "embeds": [
-            {
-                "title": "error",
-                "description": errner,
-
-                "color": 16711680
-            }
-        ],
-        "attachments": []
-    })
+    
     var replaced = replaceAll(htmldata, "{{error}}", userdisplayerror);
     replaced = replaceAll(replaced, "{{errorid}}", errorid);
     return replaced;
@@ -294,24 +286,7 @@ async function checkaspectratio(imagelocation) {
     }
     templatename = "template.png"
 
-    if (capesmade == 20){
-        capesmade = 0;
-        templatename = "promotemplate.png"
-        axios.post(config.promowebhook, {
-            "content": null,
-            "embeds": [
-              {
-                "title": ":duck: We just fed a duck!",
-                "description": "A user just made the **20th** cape.\nⓘ Every **20** capes we feed a cup of oats to local ducks!\n\nMake more capes at **https://autocape.app/**",
-                "color": 16623873
-              }
-            ],
-            "attachments": []
-          })
-
-    }
-
-    console.log(capesmade)
+    
 
     if (aspectratio == 0.625) {
         console.log('correct aspect ratio')

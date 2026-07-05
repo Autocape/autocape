@@ -329,7 +329,12 @@
         
     </div>
     <!-- <canvas id="capecanvas" ></canvas> -->
-    
+    <script>
+        gobackbtn = document.getElementsByClassName("goback")[0];
+        gobackbtn.addEventListener('click', () => {
+            window.location.href = "/";
+        });
+    </script>
     <script>
         var countdown = 0;
         var isrendered = false;
@@ -349,9 +354,17 @@
         const pcrapp = document.getElementsByClassName('pcr-app')[0];
 
         const donebtn = document.getElementsByClassName('donebtn')[0];
+        var doneclicked = false;
 
 
         donebtn.addEventListener("click", function(){
+            if (doneclicked == true) {
+                return;
+            }
+            donebtn.innerHTML = '<img src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/preview/90-ring-white-36.svg" height="30px"></img>';
+            donebtn.disabled = true;
+            doneclicked = true;
+            
 
 
             colourmatch = "true";
@@ -366,11 +379,34 @@
                                 if (xhr.readyState == 4 && xhr.status == 200) {
                                     console.log(xhr.responseText);
                                     jsonsa = JSON.parse(xhr.responseText);
+                                    console.log(jsonsa.path);
                                     if (isstate == true) {
-                                        window.location.href = "https://autocape.app/makecape?fromeditor=true&stateid="+ stateid +"&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path;
+                                       const idxhr = new XMLHttpRequest();
+                                        idxhr.open("GET", "/makecape?fromeditor=true&stateid="+ stateid +"&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path, true);
+                                        idxhr.send();
+                                        idxhr.onreadystatechange = function() {
+                                            if (idxhr.readyState == 4 && idxhr.status == 200) {
+                                                console.log(idxhr.responseText);
+                                                const resultjson = JSON.parse(idxhr.responseText);
+                                                if (resultjson.resultid != null) {
+                                                    window.location.href = "/result/" + resultjson.resultid;
+                                                }
+                                            }
+                                        }
                                         
                                     } else {
-                                        window.location.href = "https://autocape.app/makecape?fromeditor=true&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path;
+                                       const idxhr = new XMLHttpRequest();
+                                        idxhr.open("GET", "/makecape?fromeditor=true&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path, true);
+                                        idxhr.send();
+                                        idxhr.onreadystatechange = function() {
+                                            if (idxhr.readyState == 4 && idxhr.status == 200) {
+                                                console.log(idxhr.responseText);
+                                                const resultjson = JSON.parse(idxhr.responseText);
+                                                if (resultjson.resultid != null) {
+                                                    window.location.href = "/result/" + resultjson.resultid;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 if (xhr.readyState == 4 && xhr.status != 200) {
@@ -417,7 +453,7 @@
             console.log("Electron detected");
         }
         else {
-            startdesktop();
+            //startdesktop();
         }
 
         function resizedwindow() {
