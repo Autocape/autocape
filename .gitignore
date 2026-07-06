@@ -6,9 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-
+# Autocape-related files
 config.json
-
 results
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -109,3 +108,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# macOS
+.DS_Store
+*/.DS_Store
