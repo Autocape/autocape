@@ -39,7 +39,7 @@ app.use(cors());
 
 app.get('/', (req, res) => {
 
-    res.sendFile(__dirname + '/cloakslol/autocapenew.html');
+    res.sendFile(__dirname + '/cloakslol/autocape.html');
 });
 
 
@@ -77,7 +77,7 @@ app.get("/cape/:id", async (req, res) => {
 })
 
 app.get('/resize', async (req, res) => {
-    res.sendFile(__dirname + "/cloakslol/resizeruinew.html")
+    res.sendFile(__dirname + "/cloakslol/resizerui.html")
 })
 
 

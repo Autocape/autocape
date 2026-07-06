@@ -9,73 +9,118 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <meta name="description" content="Automatic cape Generator">
-    <meta name="keywords" content="Minecraft, Cape, Generator, Automatic, Free, 1.16, 1.15, 1.14, 1.13, 1.12, 1.11, 1.10, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0">
+    <meta name="theme-color" content="#04031A">
+    <meta name="description" content="Autocape. Minecraft capes made easily, efficiently and for free. Move away from the ads and create your capes in real time to wear in Minecraft. 3 clicks and you're done.">
+    <meta name="keywords" content="minecraft,cape,minecraft cape,free cape,free minecraft cape,minecraft cape maker,cape maker,minecraft cape creator,cape creator,minecraft cape generator,cape generator,minecraft cape editor,cape editor">
+    <meta name="author" content="Felixmax_">
+    <meta property="og:title" content="Autocape.app - Make a Cape from an Image!">
+    <meta property="og:description" content="Autocape. Minecraft capes made easily, efficiently and for free. Move away from the ads and create your capes in real time to wear in Minecraft. 3 clicks and you're done.">
+    
+    
     <style>
-        body {
-            background-color: #252526;
-            color: #fff;
-            font-family: 'popins', sans-serif;
+        body{
+            background: linear-gradient(73deg, #04031A 0%, #050242 100%);
+            margin: 0px;
+            font-family: poppins;
+        }
+        .headder {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%), rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            height: 100px;
             
+
         }
-        .headder{
-            height: 80px;
-            width: calc(100% - 30px);
-            margin: 15px;
-            background-color: #1d1d1d;
-            border-radius: 12px;
-            padding: 0px;
-        }
-        .logo{
-            margin-top: 15px;
+        .logo {
+            margin-top: 20px;
             height: 100%;
             display: inline-block;
+            margin-left: calc(50vw - 190px);
+        }
+        .goback {
+            position: absolute;
+            top: 40px;
+            height: 100%;
+            display: none;
+            gap: 0px;
             margin-left: 20px;
-        }
-        .textsegement{
-            height: 50px;
-            display: inline-block;
-            margin-left: 20px;
-            font-size: 15px;
-            
-        }
-        .page {
-            width: calc(100% - 50px);
-            margin: 15px;
-            background-color: #1d1d1d;
-            padding: 10px;
-            border-radius: 12px;
-        }
-        .welcometext {
-            font-size: 30px;
-            margin: auto;
-            text-align: center;
-
-            
-
-        }
-        input[type="file"] {
-        display: none;
-        }
-        .imageselector {
-            margin: auto;
-            display: block;
-            margin-top: 20px;
-            width: 500px;
-            height: 50px;
-        }
-        .custom-file-upload {
-            margin: auto;
-            display: block;
-            margin-top: 20px;
-            width: 500px;
-            height: 50px;
-            background-color: #272727;
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-            font-size: 20px;
+            color: rgba(255, 255, 255, 0.39);
+            user-select: none;
             cursor: pointer;
+        }
+        .textgoback {
+            display: inline-block;
+            margin-left: 40px;
+            
+            font-size: 15px;
+        }
+        .arrowgoback{
+            margin-left: 10px;
+        }
+        .content{
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+            
+            border-radius: 17px;
+            
+            height: calc(100vh - 145px);
+            
+            background: rgba(255, 0, 0, 0);
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .dropzonecontent{
+            border-radius: 17px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            color:  white;
+            height: 60vh;
+            color: #12AEE8;
+            text-shadow: 0px 0px 29px rgba(18, 174, 232, 0.37);
+            font-family: Poppins;
+            font-size: 35px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+        .dropzonebutton{
+            border-radius: 17px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            margin-top: 20px;
+            color:  white;
+            height: 100%;
+            color: #12AEE8;
+            color: rgba(255, 255, 255, 0.40);
+            
+            text-shadow: 0px 0px 22px rgba(115, 112, 129, 0.51);
+            font-family: Poppins;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+            height: 100%;
+            
+        }
+        .uploadtextspecial{
+            color: rgba(17, 188, 248, 0.92);
+            text-shadow: 0px 0px 29px #12AEE8;
+            font-family: Poppins;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            text-align: center;
+        
         }
         @keyframes shake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
@@ -90,35 +135,175 @@
             90% { transform: translate(1px, 2px) rotate(0deg); }
             100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
+        input[type="file"] {
+        display: none;
+        }
+        .custom-file-upload {
+            width: 100%;
+            height: 100%;
+        }
+        .dropbuttonwrapper{
+            width: 100%;
+            height: 100%;
+            
+        }
+        .dropzonebuttonicon{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
     <div class="headder">
-        <div class="logo">
-            <a href="https://dev.cloaks.lol/autocape">
-            <img src="https://slashonline.net/media/autocape.png" alt="Cloaks.lol Logo" height="50">
-        </a>
+        <div class="goback">
+            <div class="arrowgoback">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
+                    <path d="M0.360901 7.29289C-0.029623 7.68342 -0.029623 8.31658 0.360901 8.70711L6.72486 15.0711C7.11539 15.4616 7.74855 15.4616 8.13908 15.0711C8.5296 14.6805 8.5296 14.0474 8.13908 13.6569L2.48222 8L8.13908 2.34315C8.5296 1.95262 8.5296 1.31946 8.13908 0.928932C7.74855 0.538408 7.11539 0.538408 6.72486 0.928932L0.360901 7.29289ZM2.0694 7H1.06801L1.06801 9H2.0694V7Z" fill="white" fill-opacity="0.39"/>
+                  </svg>
+
+            </div>
+            <div class="textgoback">
+                Go Back
+            </div>
         </div>
+        <div class="logo">
+            <img src="https://autocape.app/media/A1GWF2Gn7Hv8aRWuqjDasGSB31693008466077/5p8rLGmPAg.png" alt="Cloaks.lol Logo" height="56">
+        </div>
+        <div class="account">
+            
+        </div>
+    </div>
+    <div class="content">
+        <!-- drop zone and file selector -->
+        <div class="dropzone" ondrop="dropHandler(event);">
+            <div class="dropzonecontent">
+                <div class="dropzonetext">
+                    Drop your image here
+                </div>
+            </div>
+        </div>
+                
+                        <label class="dropzonebutton" id="uisw">
+                            
+                        
+                    <div class="dropzonebuttonicon" id="uploadingtext">
+                        Click here to
+                        <div class="uploadtextspecial">
+                            UPLOAD
+                        </div>
+                    </div>
+                        
+                        <input class="imageselector" id="selectors" type="file" accept="image/png, image/jpeg">
+                        </label>
+                    
+                
+            
         
     </div>
-    <div class="page">
-        <div class="welcometext">
-            Welcome to Autocape!
-            Start by selecting an image
-        </div>
-        <label class="custom-file-upload" id="uisw">
-            <div id="uploadingtext" style="visibility: hidden;">Uploading...</div>
-            <div id="uploadingtextb" >Click here to selct a File</div>
-        <input class="imageselector" id="selectors" type="file" accept="image/png, image/jpeg">
-        </label>
-    </div>
-
     <script>
-        const uis = document.getElementById("uisw");
-        const uist = document.getElementById("uploadingtext");
-        const uistb = document.getElementById("uploadingtextb");
-        const inputElement = document.getElementById("selectors");
-        inputElement.addEventListener("change", handleFiles, false);
+        
+    const dropzonecontent = document.querySelector(".dropzone");
+    const dropzonebutton = document.querySelector(".dropzonebutton");
+    const uist = document.getElementById("uploadingtext");
+    
+    const inputElement = document.getElementById("selectors");
+    dropzonecontent.addEventListener('dragover', function(e) {
+    e.preventDefault();
+}, false);
+
+    
+
+    function dropHandler(ev) {
+  console.log("File(s) dropped");
+
+  // Prevent default behavior (Prevent file from being opened)
+  ev.preventDefault();
+
+  if (ev.dataTransfer.items) {
+    // Use DataTransferItemList interface to access the file(s)
+    [...ev.dataTransfer.items].forEach((item, i) => {
+      // If dropped items aren't files, reject them
+      if (item.kind === "file") {
+        const file = item.getAsFile();
+        console.log(`… file[${i}].name = ${file.name}`);
+        const fileList = file
+        console.log(fileList);
+        if(fileList.size > 3000000){
+                
+                uist.style.visibility = "visible";
+                
+                uist.innerHTML = "File is too big! (Max 3MB)";
+                uist.style.color = "red";
+                uist.style.animation = "shake 0.5s";
+                return;
+            }
+            if(fileList.type == "image/png" || fileList.type == "image/jpeg"){
+                bombimage = fileList;
+                
+            }
+            else{
+                
+                uist.style.visibility = "visible";
+                uistb.style.visibility = "visible";
+                uist.innerHTML = "File is not a png or jpg!";
+                uist.style.color = "red";
+                uist.style.animation = "shake 0.5s";
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append("file", fileList);
+            var request = new XMLHttpRequest();
+            request.open("POST", "https://media.autocape.app/upload");
+            console.log(formData);
+            request.send(formData);
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    var response = JSON.parse(this.responseText);
+                    var path = response.path;
+                    if(this.status == 200){
+                        uist.style.visibility = "visible";
+                        
+                        uist.innerHTML = "Success!";
+                        uist.style.color = "green";
+                        uist.style.animation = "none";
+                        newlocation = "/resize?img=" + "https://media.autocape.app/media/" + path;
+                        window.location.href = newlocation;
+                    }
+                    
+                }
+                else if (this.readyState == 4 && this.status == 429) {
+                        uist.style.visibility = "visible";
+                        
+                        uist.innerHTML = "Error! you are being ratelimited!";
+                        uist.style.color = "red";
+                        uist.style.animation = "shake 0.5s";
+                    }
+                    else if (this.readyState == 4 && this.status == 500){
+                        uist.style.visibility = "visible";
+                        
+                        uist.innerHTML = "Error! " + this.responseText;
+                        uist.style.color = "red";
+                        uist.style.animation = "shake 0.5s";
+                    }
+            };
+      }
+    });
+  } else {
+    // Use DataTransfer interface to access the file(s)
+    [...ev.dataTransfer.files].forEach((file, i) => {
+      console.log(`… file[${i}].name = ${file.name}`);
+      const fileList = this.files; /* now you can work with the file list */
+      console.log(fileList);
+    });
+  }
+}
+
+    inputElement.addEventListener("change", handleFiles, false);
 
        
 
@@ -126,7 +311,7 @@
             const fileList = this.files; /* now you can work with the file list */
             console.log(fileList);
             uist.style.visibility = "visible";
-            uistb.style.visibility = "hidden";
+            
             uist.innerHTML = "Uploading...";
             uist.style.color = "white";
 
@@ -134,7 +319,7 @@
             if(fileList.length == 0){
                 
                 uist.style.visibility = "visible";
-                uistb.style.visibility = "visible";
+                
                 uist.innerHTML = "No file selected!";
                 uist.style.color = "red";
                 uist.style.animation = "shake 0.5s";
@@ -144,7 +329,7 @@
             if(fileList[0].size > 3000000){
                 
                 uist.style.visibility = "visible";
-                uistb.style.visibility = "visible";
+                
                 uist.innerHTML = "File is too big! (Max 3MB)";
                 uist.style.color = "red";
                 uist.style.animation = "shake 0.5s";
@@ -152,7 +337,7 @@
             }
 
             //check if file is jpg
-             if(fileList[0].type == "image/png" || fileList[0].type == "image/jpeg"){
+            if(fileList[0].type == "image/png" || fileList[0].type == "image/jpeg"){
                 bombimage = fileList[0];
                 
             }
@@ -170,7 +355,7 @@
             var formData = new FormData();
             formData.append("file", fileList[0]);
             var request = new XMLHttpRequest();
-            request.open("POST", "http://media.cloaks.lol/upload");
+            request.open("POST", "https://media.autocape.app/upload");
             console.log(formData);
             request.send(formData);
             request.onreadystatechange = function() {
@@ -180,25 +365,90 @@
                     var path = response.path;
                     if(this.status == 200){
                         uist.style.visibility = "visible";
-                        uistb.style.visibility = "hidden";
+                        
                         uist.innerHTML = "Success!";
                         uist.style.color = "green";
                         uist.style.animation = "none";
-                        newlocation = "https://dev.cloaks.lol/makecape?img=" + "https://dev.cloaks.lol/media/" + path;
+                        newlocation = "/resize?img=" + "https://media.autocape.app/media/" + path;
                         window.location.href = newlocation;
-                    }else{
+                    }
+                    
+                }
+                else if (this.readyState == 4 && this.status == 429) {
                         uist.style.visibility = "visible";
-                        uistb.style.visibility = "visible";
+                        
+                        uist.innerHTML = "Error! you are being ratelimited!";
+                        uist.style.color = "red";
+                        uist.style.animation = "shake 0.5s";
+                    }
+                    else if (this.readyState == 4 && this.status == 500){
+                        uist.style.visibility = "visible";
+                        
                         uist.innerHTML = "Error! " + this.responseText;
                         uist.style.color = "red";
                         uist.style.animation = "shake 0.5s";
                     }
-                }
             };
 
 
             
         }
+
     </script>
+    <script>
+        // hide the dropzone button if the user is on mobile
+        var dropzone = document.querySelector(".dropzone");
+        if(window.innerWidth < 800){
+            dropzone.style.display = "none";
+        }
+    </script>
+
+    <script>
+        // (C) Felixmax_ 2023
+var lang = navigator.language || navigator.userLanguage;
+var pageid = "0";
+var translationjson = {};
+
+
+function localizecontent(divid){
+    var div = document.getElementById(divid);
+    if (div == null) {
+        console.log("%c[localize.js] Error: localizecontent() could not find element with id " + divid, "color: red;");
+    }
+    if (translationjson == {}) {
+        console.log("%c[localize.js] Error: localizecontent() could not find translation data. probaply because plugin was never initialized! ", "color: red;");
+    }
+    
+
+
+}
+
+function initlocalize(pageident){
+    console.log("%c[localize.js] Initializing localization for page " + pageident + " in language " + lang + "...", "color: blue;");
+    pageid = pageident;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "localize/" + lang + "/" + pageid, true);
+    xhr.onload = function (e) {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                translationjson = JSON.parse(xhr.responseText);
+                console.log("%c[localize.js] Loaded translation data for page " + pageid + " in language " + lang + "!", "color: green;");
+                return true;
+
+            } else if (xhr.status === 404) {
+                console.error(xhr.statusText);
+
+            }
+        }
+    };
+    xhr.onerror = function (e) {
+        console.error(xhr.statusText);
+
+    };
+    xhr.send(null);
+}
+        initlocalize(1);
+    </script>
+    
 </body>
 </html>
