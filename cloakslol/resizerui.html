@@ -249,7 +249,70 @@
         #popuppickprevimg {
             cursor: pointer;
         }
+        .colourmatchselectiontext {
+            color: #FFF;
+            text-align: center;
+            text-shadow: 0px 0px 14px rgba(255, 255, 255, 0.57);
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-top: 10px;
+        }
+        .notopmarginbtn{
+            margin-top: 0px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            height: fit-content;
+        }
+        .colourpickerselect{
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.21);
+            background: rgba(255, 255, 255, 0.04);
+            height: 60px;
+            width: calc(100% - 20px);
+            margin: 10px;
+            margin-bottom: 5px;
+            backdrop-filter: blur(9.800000190734863px);
+            text-align: center;
+            color: #FFF;
+            text-align: center;
+            text-shadow: 0px 0px 14px rgba(255, 255, 255, 0.57);
+            font-family: Poppins;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 250ms;
+        }
+        .colpickselenabled{
+            background: rgba(30, 255, 0, 0.13);
+            box-shadow: 0px 0px 62px 0px rgba(112, 255, 0, 0.15);
+        }
+        .colourpicker{
+            border: none;
+            background: none;
+            width: 30%;
+            height: 100%;
+            cursor: pointer;
+            
 
+        }
+        .custombuttonflex{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc(100% - 40px);
+        }
             
         
     </style>
@@ -308,23 +371,25 @@
             <div class="prbtns">
             <!-- <div class="autocapebutton colpickerbtn" onclick="showcolourpicker()">Custom Colour</div> -->
             <div class="autocapebutton donebtn">Done</div>
+            <div class="colourmatchingtextandbutton">
+                <div class="colourmatchselectiontext">
+                Colour matching mode:
+            </div>
+            <div class="autocapebutton notopmarginbtn">
+                <div class="colourpickerselect colpickselenabled" id="automaticcolourpickerselect">
+                    Automatic
+                </div>
+                <div class="colourpickerselect custombuttonflex" id="customcolourpickerselect">
+                    <div class="customtext">
+                        Custom
+                    </div>
+                    <input type="color" id="customcolourpicker" class="colourpicker">
+                </div>
+            </div>
+            </div>
         </div>
            </div>
-           <div class="colpopup" id="colpop" style="visibility: hidden;">
-            <div class="popuppickprev">
-                <div class="popuppickprevimg">
-
-                <img src="" id="popuppickprevimg" alt="">
-                
-                </div>
-                <div class="contentnexttopickerimgoinginsane">
-                    <div class="color-picker">
-
-                    </div> 
-                </div>
-                  
-            </div>
-           </div>
+           
 
         
     </div>
@@ -356,6 +421,23 @@
         const donebtn = document.getElementsByClassName('donebtn')[0];
         var doneclicked = false;
 
+        var selectedmatchmode = "automatic";
+
+        const automaticcolourpickerselect = document.getElementById('automaticcolourpickerselect');
+        const customcolourpickerselect = document.getElementById('customcolourpickerselect');
+
+        automaticcolourpickerselect.addEventListener('click', () => {
+            selectedmatchmode = "automatic";
+            automaticcolourpickerselect.classList.add('colpickselenabled');
+            customcolourpickerselect.classList.remove('colpickselenabled');
+        });
+
+        customcolourpickerselect.addEventListener('click', () => {
+            selectedmatchmode = "custom";
+            automaticcolourpickerselect.classList.remove('colpickselenabled');
+            customcolourpickerselect.classList.add('colpickselenabled');
+        });
+
 
         donebtn.addEventListener("click", function(){
             if (doneclicked == true) {
@@ -367,7 +449,11 @@
             
 
 
-            colourmatch = "true";
+            if (selectedmatchmode == "automatic") {
+                colourmatch = "true";
+            } else {
+                colourmatch = "custom&customcolour=" + document.getElementById('customcolourpicker').value.replace("#", "");
+            }
             canvass = cropper.getCroppedCanvas();
                             canvass.toBlob(function(blob) {
                                 var xhr = new XMLHttpRequest();
@@ -422,40 +508,12 @@
 
 
 
-        popuppickprevimg.addEventListener('click', function() {
-            // get the color of the pixel under the mouse
-            var x = event.offsetX;
-            var y = event.offsetY;
-            x = x + 20;
-            y = y + 20;
-            var pixel = ctx.getImageData(x, y, 1, 1);
-            var data = pixel.data;
-            var rgba = 'rgba(' + data[0] + ', ' + data[1] +
-                ', ' + data[2] + ', ' + (data[3] / 255) + ')';
-            pickr.setColor(rgba);
-            
-        });
-
-        function startdesktop() {
-            xmldesk = new XMLHttpRequest();
-            xmldesk.open("GET", "http://localhost:42065/loadurl?url=" + window.location.href, true);
-            xmldesk.send();
-            xmldesk.onreadystatechange = function() {
-                if (this.status == 200) {
-                    console.log("Desktop app started");
-                }
-            }
-            
-            
-        }
         
-        if (navigator.userAgent.includes("Electron")) {
-            console.log("Electron detected");
-        }
-        else {
-            //startdesktop();
-        }
 
+         
+        
+        
+       
         function resizedwindow() {
             var calcedwith = livepreviewdiv.offsetWidth;
             var calcedheight = livepreviewdiv.offsetWidth;
@@ -475,53 +533,8 @@
             }, 110);
         }
 
-        function showcolourpicker() {
-            colpop.style.visibility = "visible";
-            pickr = Pickr.create({
-    el: '.color-picker',
-    theme: 'monolith', // or 'monolith', or 'nano'
-    closeOnScroll: false,
-    showAlways: true,
-    container: 'body',
-    useAsButton: false,
-
-    swatches: [
-        'rgba(38, 38, 38)',
-        'rgba(0, 0, 0)',
-        'rgba(127, 23, 255)',
-        'rgba(230, 0, 255)'
-    ],
-
-    components: {
-
-        // Main components
-        preview: true,
-        opacity: false,
-        hue: true,
-
-        // Input / output Options
-        interaction: {
-            hex: true,
-            rgba: false,
-            hsla: false,
-            hsva: false,
-            cmyk: false,
-            input: true,
-            clear: false,
-            save: false
-        }
-    }
-});
-            
-           
-            pickr.show();
-            
-
-        }
-        function hidecolourpicker() {
-            colpop.style.visibility = "hidden";
-            pickr.hide();
-        }
+        
+        
 
 
         if (stateid != null) {
@@ -585,7 +598,7 @@
                 var img = new Image();
                 imgsourceurl = URL.createObjectURL(blob);
                 img.src = imgsourceurl;
-                popuppickprevimg.src = imgsourceurl
+                
                 img.onload = function() {
                     // first draw the space where the image would go black
                     ctx.fillStyle = "black";

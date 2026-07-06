@@ -26,7 +26,7 @@ else {
      fullUrl = config.hostname;
 }
 
-var capesmade = 0;
+
 
 if (fs.existsSync(__dirname + "/results") == false) {
     fs.mkdirSync(__dirname + "/results");
@@ -158,8 +158,7 @@ app.get('/makecape', async (req, res) => {
 
     starttime = Date.now();
 
-    capesmade = capesmade + 1;
-
+   
 
 
     if (forecerender == null) {
@@ -193,7 +192,7 @@ app.get('/makecape', async (req, res) => {
             console.log('http')
             axios.get(baseimagelocation, { responseType: 'arraybuffer', headers: { 'User-Agent': 'Autocape/AutocapeBot (Support:discord.gg/wxRatfNSwz) Axios/1.4.0' } } )
                 .then(async response => {
-                    const outputBuffer = await checkaspectratio(response.data)
+                    const outputBuffer = await makecape(response.data)
 
                     if (outputBuffer == "err:aspectratio") {
                         res.json({ "err": "aspectratio" });
@@ -201,9 +200,7 @@ app.get('/makecape', async (req, res) => {
                     else {
 
 
-                        res.setHeader('sex', '10');
-                        res.setHeader('pussy', '1');
-                        res.setHeader('trinidad', 'is kinda bad');
+                        
                         res.setHeader('resultid', outputBuffer);
                         res.json({ "resultid": outputBuffer });
                         if (stateid == null) {
@@ -270,7 +267,7 @@ function makeresultid(length) {
 }
 
 
-async function checkaspectratio(imagelocation) {
+async function makecape(imagelocation) {
 
     const metadata = await sharp(imagelocation).metadata();
     const widthog = metadata.width;
@@ -366,7 +363,12 @@ async function checkaspectratio(imagelocation) {
                     hexcol = prmcolour;
 
                 });
-            } else {
+            } 
+            else if (usecolourmatch == "custom") {
+                console.log("custom")
+                hexcol = customcolour;
+            }
+            else {
                 hexcol = "121713"
             }
             console.log("colour applied" + hexcol)
