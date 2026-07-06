@@ -1,4 +1,5 @@
-# Autocape
+
+<img width="1143" height="759" alt="autocapecmmobile" src="https://github.com/user-attachments/assets/f1d22d81-8201-4573-b67b-68901f57bcc0" />
 Automatic Minecraft cape generator.   
 
 ## Setup
