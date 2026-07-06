@@ -1,4 +1,7 @@
 {
+  "name": "autocape",
+  "version": "0.0.1",
+  "author": "Slashonline",
   "dependencies": {
     "axios": "^1.16.0",
     "body-parser": "^2.3.0",
@@ -10,5 +13,12 @@
     "sharp": "^0.35.3",
     "sqlite3": "^6.0.1",
     "xmlhttprequest": "^1.8.0"
+  },
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
