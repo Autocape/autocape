@@ -222,15 +222,9 @@ async function generateCape(imageBuffer, options) {
         const b = Math.round(bc.mean);
         hexColor = ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0');
 
-    } else if (options.useColorMatch === "prominant") {
-        try {
-            const palette = await Vibrant.from(outputBuffer).getPalette();
-            hexColor = palette.Vibrant.getHex().replace("#", "");
-        } catch (err) {
-            console.error("Vibrant error:", err);
-        }
+    }
 
-    } else if (options.useColorMatch === "custom" && options.customColor) {
+     else if (options.useColorMatch === "custom" && options.customColor) {
         hexColor = options.customColor;
     }
 
