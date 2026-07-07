@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://bs-community.github.io/skinview3d/js/skinview3d.bundle.js"></script>
     <meta name="description" content="Autocape Error | Automatic cape Generator">
     <meta property="og:title" content="Autocape Error" />
@@ -19,174 +20,35 @@
     <meta name="theme-color" content="#c400fa">
     <meta name="twitter:card" content="summary_large_image">
     <style>
-        body{
-            background: linear-gradient(73deg, #04031A 0%, #050242 100%);
-            margin: 0px;
-            font-family: poppins;
-        }
-        .headder {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%), rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            height: 100px;
-            
-
-        }
-        .logo {
-            margin-top: 20px;
-            height: 100%;
-            display: inline-block;
-            margin-left: calc(50vw - 190px);
-        }
-        .goback {
-            position: absolute;
-            top: 40px;
-            height: 100%;
-            display: flex;
-            gap: 0px;
-            margin-left: 20px;
-            color: rgba(255, 255, 255, 0.39);
-            user-select: none;
-            cursor: pointer;
-        }
-        .textgoback {
-            display: inline-block;
-            margin-left: 40px;
-            
-            font-size: 15px;
-        }
-        .arrowgoback{
-            margin-left: 10px;
-        }
-        .content{
-            margin-top: 20px;
-            margin-left: 10px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            border-radius: 17px;
-            
-            height: calc(100vh - 140px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(16px);
-        }
-        .thankyou{
-            color: #12AEE8;
-            text-shadow: 0px 0px 32px rgba(18, 174, 232, 0.12);
-            font-family: Poppins;
-            font-size: 35px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            text-align: center;
-            margin-top: 40px;
-        }
-        .downloadpreview{
-            border-radius: 17px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(217, 217, 217, 0.04);
-            backdrop-filter: blur(16px);
-            height: 40vh;
-        }
-        #imgprev{
-            height: 100%;
-            border-radius: 17px;
-        }
-        .livepreview {
-            border-radius: 17px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(217, 217, 217, 0.04);
-            backdrop-filter: blur(16px);
-            height: 40vh;
-            width: 40vh;
-            
-        }
-        .previews{
-            display: flex;
-            gap: 20px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-        .downloadbutton{
-            border-radius: 17px;
-            border: 1px solid rgba(255, 255, 255, 0.21);
-            background: rgba(0, 148, 255, 0.12);
-            box-shadow: 0px 0px 34px 0px rgba(24, 32, 68, 0.67);
-            display: inline-block;
-            padding: 20px;
-            color: #FFF;
-            font-family: Poppins;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            cursor: pointer;
-        }
-        .copyicond{
-            padding: 0px;
-            margin: 0px;
-            height: 0px;
-        }
-        .buttonrow1{
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            align-items: center;
-            justify-content: center;
-        }
-        .buttons{
-            margin-top: 50px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        .errortext{
-            color: #FFF;
-            text-shadow: 0px 0px 32px rgba(18, 174, 232, 0.12);
-            font-family: Poppins;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            text-align: center;
-            margin-top: 40px;
-        }
+        * { font-family: Poppins, system-ui, sans-serif; }
     </style>
 </head>
-<body>
-    <div class="headder">
-        <div class="goback">
-            <div class="arrowgoback">
-                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                    <path d="M0.360901 7.29289C-0.029623 7.68342 -0.029623 8.31658 0.360901 8.70711L6.72486 15.0711C7.11539 15.4616 7.74855 15.4616 8.13908 15.0711C8.5296 14.6805 8.5296 14.0474 8.13908 13.6569L2.48222 8L8.13908 2.34315C8.5296 1.95262 8.5296 1.31946 8.13908 0.928932C7.74855 0.538408 7.11539 0.538408 6.72486 0.928932L0.360901 7.29289ZM2.0694 7H1.06801L1.06801 9H2.0694V7Z" fill="white" fill-opacity="0.39"/>
-                  </svg>
+<body class="min-h-screen bg-[linear-gradient(73deg,#04031A_0%,#050242_100%)] m-0 text-white">
+    <div class="headder border-b border-white/15 bg-linear-to-r from-white/6 to-transparent bg-[rgba(255,255,255,0.05)] backdrop-blur-xl h-20 flex items-center px-4 select-none">
+        <div class="goback top-9 sm:top-8 left-5 sm:left-7 text-white/40 select-none cursor-pointer absolute flex items-center justify-center gap-4 opacity-80 hover:opacity-100 transition-all">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M0.360901 7.29289C-0.029623 7.68342 -0.029623 8.31658 0.360901 8.70711L6.72486 15.0711C7.11539 15.4616 7.74855 15.4616 8.13908 15.0711C8.5296 14.6805 8.5296 14.0474 8.13908 13.6569L2.48222 8L8.13908 2.34315C8.5296 1.95262 8.5296 1.31946 8.13908 0.928932C7.74855 0.538408 7.11539 0.538408 6.72486 0.928932L0.360901 7.29289ZM2.0694 7H1.06801L1.06801 9H2.0694V7Z" fill="white" fill-opacity="0.39"/></svg>
+            </div>
+            <div class="hidden sm:block text-sm mt-px">Go Back</div>
+        </div>
 
-            </div>
-            <div class="textgoback">
-                Go Back
-            </div>
-        </div>
-        <div class="logo">
-            <img src="https://media.autocape.app/media/n7leGMmIzGlOloDzB4X580ECB1783358474181/iGZHfHlfNs3376.png" alt="Cloaks.lol Logo" height="56">
-        </div>
-        <div class="account">
-            
+        <div class="mx-auto">
+            <img src="https://media.autocape.app/media/n7leGMmIzGlOloDzB4X580ECB1783358474181/iGZHfHlfNs3376.png" alt="Autocape Logo" class="h-10 object-contain">
         </div>
     </div>
-    <div class="content">
-        <div class="thankyou">
-            something went wrong, please try again later
+    <main class="mx-4 mt-6 rounded-[17px] p-6 min-h-[calc(100vh-150px)] flex flex-col items-center justify-center gap-6 text-center w-full max-w-3xl mx-auto">
+        <div class="flex flex-col items-center justify-center p-6 border border-white/10 bg-white/6 rounded-2xl backdrop-blur-xl gap-4">
+            <div class="text-xl text-white font-bold flex flex-col gap-2 items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-heart-broken"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /><path d="M12 6l-2 4l4 3l-2 4v3" /></svg>
+                Something went wrong.
+            </div>
+            <div class="text-base font-semibold text-white/60 flex flex-col gap-2">
+                {{error}}
+                <span class="text-sm text-white/30">Code: {{errorid}}</span>
+            </div>
         </div>
-        <div class="errortext">
-            {{error}}
-        </div>
-        
-        
-    </div>
-    
-   
+    </main>
+
     <script>
         gobackbtn = document.getElementsByClassName("goback")[0];
         gobackbtn.addEventListener('click', () => {
