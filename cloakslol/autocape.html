@@ -56,10 +56,10 @@
         <div></div>
     </div>
 
-    <div class="sm:my-6 h-full mx-5 rounded-[17px] sm:flex-1 bg-transparent flex flex-col overflow-hidden max-sm:justify-start gap-4">
+    <div class="sm:m-8 h-full mx-5 rounded-[17px] sm:flex-1 bg-transparent flex flex-col overflow-hidden max-sm:justify-start gap-8">
         <!-- drop zone and file selector -->
         <div class="dropzone" ondrop="dropHandler(event);">
-            <div class="hidden sm:flex flex-col items-center justify-center gap-4 rounded-[17px] border border-white/15 bg-white/4 backdrop-blur-xl text-[#12AEE8] sm:h-[60vh] h-48 text-3xl font-semibold text-center" aria-hidden="true">
+            <div class="hidden sm:flex flex-col items-center justify-center gap-4 rounded-[17px] border border-white/15 bg-white/4 backdrop-blur-xl text-[#12AEE8] sm:h-[60vh] h-48 text-3xl font-semibold text-center hover:file:scale-99 transition-all" aria-hidden="true">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-drag-drop upload-drop-glow"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M19 11v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2" /><path d="M13 13l9 3l-4 2l-2 4l-3 -9" /><path d="M3 3l0 .01" /><path d="M7 3l0 .01" /><path d="M11 3l0 .01" /><path d="M15 3l0 .01" /><path d="M3 7l0 .01" /><path d="M3 11l0 .01" /><path d="M3 15l0 .01" /></svg>
                 <div class="upload-text-glow">Drop your image here</div>
             </div>
@@ -67,7 +67,7 @@
 
         <label
             id="uisw"
-            class="dropzonebutton rounded-[17px] border border-white/15 bg-white/4 backdrop-blur-xl text-white/40 text-lg font-semibold w-full flex flex-col gap-2 items-center justify-center py-6 h-[85vh] sm:flex-1 box-border cursor-pointer"
+            class="dropzonebutton rounded-[17px] border border-white/15 bg-white/4 backdrop-blur-xl text-white/40 text-lg font-semibold w-full flex flex-col gap-2 items-center justify-center py-6 h-[85vh] sm:flex-1 box-border cursor-pointer hover:scale-99 transition-all"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-cloud-upload text-neutral-500 sm:h-8"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" /><path d="M9 15l3 -3l3 3" /><path d="M12 12l0 9" /></svg>
             <div id="uploadingtext" class="flex items-center justify-center flex-col text-neutral-500">
@@ -89,7 +89,7 @@
         }, false);
 
         function dropHandler(ev) {
-            console.log('File(s) dropped');
+            console.log('File(s) dropped into dropzone!');
             ev.preventDefault();
 
             if (ev.dataTransfer.items) {

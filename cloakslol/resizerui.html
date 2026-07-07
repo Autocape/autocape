@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autocape - Resize</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" type="image/x-icon" href="https://slashonline.net/media/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,392 +15,81 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
     <script src="https://bs-community.github.io/skinview3d/js/skinview3d.bundle.js"></script>
+
     <style>
-        body{
-            background: linear-gradient(73deg, #04031A 0%, #050242 100%);
-            margin: 0px;
-            font-family: poppins;
+        * { 
+            font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .headder {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%), rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            height: 100px;
-            
 
-        }
-        .logo {
-            margin-top: 20px;
-            height: 100%;
-            display: inline-block;
-            margin-left: calc(50vw - 190px);
-        }
-        .goback {
-            position: absolute;
-            top: 40px;
-            height: 100%;
-            display: flex;
-            gap: 0px;
-            margin-left: 20px;
-            color: rgba(255, 255, 255, 0.39);
-            user-select: none;
-            cursor: pointer;
-        }
-        .textgoback {
-            display: inline-block;
-            margin-left: 40px;
-            
-            font-size: 15px;
-        }
-        .arrowgoback{
-            margin-left: 10px;
-        }
-        .content{
-            margin-top: 20px;
-            margin-left: 10px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            border-radius: 17px;
-            display: flex;
-    justify-content: space-between;
-            height: calc(100vh - 140px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(16px);
-        }
-        .previewcontainer{
-            height: calc(100% - 20px);
-            width: 25%;
-            margin: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(16px);
-            
-        }
-        .resizecontainer{
-            display: flex;
-            height: calc(100% - 20px);
-            width: 73%;
+        /* minimal required styles for third-party components and animations */
+        .cropper-container { border-radius: 8px; }
+        .cropper-bg { background-image: none; }
+        .cropper-modal { background: rgba(0,0,0,0.67); border-radius: 8px; }
 
-            margin: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(16px);
-            
-        }
-        .resizeimgtagcontainer{
-            border-radius: 8px;
-            width: 100%;
-            height: 100%;
-        }
-        #imagh{
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        .cropper-container{
-            border-radius: 8px;
-        }
-        .cropper-bg{
-            background-image: none;
-        }
-        .cropper-modal{
-            background: rgba(0, 0, 0, 0.671);
-            
-            border-radius: 8px;
-        }
-        .previewcontainerheadline{
-            text-align: center;
-            color: #FFF;
-            text-shadow: 0px 0px 14px rgba(255, 255, 255, 0.57);
-            font-family: Cabin;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .livepreview{
-            margin-left: 10px;
-            width: calc(100% - 20px);
-            /* border: 1px solid rgba(255, 255, 255, 0.15); */
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(16px);
-            border-radius: 8px;
-            
-        }
-        .colpopup {
-            display: flex; /* Add this line */
-            
-            position: absolute;
-            top: calc(50% - 300px);
-            left: calc(50% - 332px);
-            width: 665px;
-            height: 600px;
-            background: linear-gradient(73deg, #04031ae3 0%, #050242d5 100%);
-            backdrop-filter: blur(17px);
-            border-radius: 17px;
-            z-index: 100;
-        }
-        .popuppickprevimg img{
-            margin: 20px;
-            border-radius: 8px;
-            height: 560px;
-            
-        }
-        
-        .contentnexttopickerimgoinginsane{
-            
-            position: absolute;
-            top: -20px;
-            left: 390px;
-            width: 270px;
-        }
-        .pcr-button{
-            width: 255px !important;
-            visibility: hidden; 
-        }
-        .pcr-app{
-            border-radius: 8px !important;
-            
-        }
-        .loadingoverlay {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(73deg, #04031A 0%, #050242 100%);
-            border-radius: 17px;
-            z-index: 10002;
-            
-        }
-        @keyframes fadeout {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-        .disabledpreview{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-            background: linear-gradient(73deg, #04031A 0%, #050242 100%);
-            backdrop-filter: blur(17px);
-            z-index: 10001;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            visibility: hidden;
-        }
-        .loadingoverlaytext{
-            position: absolute;
-            top: calc(50% - 20px);
-            left: calc(50% - 40px);
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 36px;
-            color: #FFFFFF;
-        }
-        .autocapebutton{
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.21);
-            background: rgba(255, 255, 255, 0.04);
-            height: 60px;
-            margin: 10px;
-            margin-top: 20px;
-            backdrop-filter: blur(9.800000190734863px);
-            text-align: center;
-            color: #FFF;
-            text-align: center;
-            text-shadow: 0px 0px 14px rgba(255, 255, 255, 0.57);
-            font-family: Poppins;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            
-        }
-        .donebtn{
-            
-            box-shadow: 0px 0px 62px 0px rgba(112, 255, 0, 0.15);
-            background: rgba(30, 255, 0, 0.13);
-            cursor: pointer;
-            
-        }
-        
-        #popuppickprevimg {
-            cursor: pointer;
-        }
-        .colourmatchselectiontext {
-            color: #FFF;
-            text-align: center;
-            text-shadow: 0px 0px 14px rgba(255, 255, 255, 0.57);
-            font-family: Poppins;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            margin-top: 10px;
-        }
-        .notopmarginbtn{
-            margin-top: 0px;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            height: fit-content;
-        }
-        .colourpickerselect{
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.21);
-            background: rgba(255, 255, 255, 0.04);
-            height: 60px;
-            width: calc(100% - 20px);
-            margin: 10px;
-            margin-bottom: 5px;
-            backdrop-filter: blur(9.800000190734863px);
-            text-align: center;
-            color: #FFF;
-            text-align: center;
-            text-shadow: 0px 0px 14px rgba(255, 255, 255, 0.57);
-            font-family: Poppins;
-            font-size: 24px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-            cursor: pointer;
-            user-select: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 250ms;
-        }
-        .colpickselenabled{
-            background: rgba(30, 255, 0, 0.13);
-            box-shadow: 0px 0px 62px 0px rgba(112, 255, 0, 0.15);
-        }
-        .colourpicker{
-            border: none;
-            background: none;
-            width: 30%;
-            height: 100%;
-            cursor: pointer;
-            
-
-        }
-        .custombuttonflex{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 10px;
-            padding-right: 10px;
-            width: calc(100% - 40px);
-        }
-            
-        
+        @keyframes fadeout { from { opacity: 1 } to { opacity: 0 } }
     </style>
 </head>
-<body>
-    <div class="headder">
-        <div class="goback">
-            <div class="arrowgoback">
-                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none">
-                    <path d="M0.360901 7.29289C-0.029623 7.68342 -0.029623 8.31658 0.360901 8.70711L6.72486 15.0711C7.11539 15.4616 7.74855 15.4616 8.13908 15.0711C8.5296 14.6805 8.5296 14.0474 8.13908 13.6569L2.48222 8L8.13908 2.34315C8.5296 1.95262 8.5296 1.31946 8.13908 0.928932C7.74855 0.538408 7.11539 0.538408 6.72486 0.928932L0.360901 7.29289ZM2.0694 7H1.06801L1.06801 9H2.0694V7Z" fill="white" fill-opacity="0.39"/>
-                  </svg>
 
+<body class="bg-linear-to-br from-[#04031A] to-[#050242] min-h-screen m-0 font-sans text-white">
+    <div class="headder border-b border-white/15 bg-[rgba(255,255,255,0.05)] backdrop-blur-xl h-20 flex items-center px-4 select-none">
+        <div class="goback top-9 sm:top-8 left-5 sm:left-7 text-white/40 select-none cursor-pointer absolute flex items-center justify-center gap-4 opacity-80 hover:opacity-100 transition-all">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M0.360901 7.29289C-0.029623 7.68342 -0.029623 8.31658 0.360901 8.70711L6.72486 15.0711C7.11539 15.4616 7.74855 15.4616 8.13908 15.0711C8.5296 14.6805 8.5296 14.0474 8.13908 13.6569L2.48222 8L8.13908 2.34315C8.5296 1.95262 8.5296 1.31946 8.13908 0.928932C7.74855 0.538408 7.11539 0.538408 6.72486 0.928932L0.360901 7.29289ZM2.0694 7H1.06801L1.06801 9H2.0694V7Z" fill="white" fill-opacity="0.39"/></svg>
             </div>
-            <div class="textgoback">
-                Go Back
-            </div>
+            <div class="hidden sm:block text-sm mt-px">Go Back</div>
         </div>
-        <div class="logo">
-            <img src="https://media.autocape.app/media/n7leGMmIzGlOloDzB4X580ECB1783358474181/iGZHfHlfNs3376.png" alt="Cloaks.lol Logo" height="56">
-        </div>
-        <div class="account">
-           
+
+        <div class="mx-auto">
+            <img src="https://media.autocape.app/media/n7leGMmIzGlOloDzB4X580ECB1783358474181/iGZHfHlfNs3376.png" alt="Autocape Logo" class="h-10 object-contain">
         </div>
     </div>
-    <div class="content">
-        <div class="loadingoverlay" id="loadingoverlay" style="visibility: visible;">
-            <div class="loadingoverlaytext">
-                Loading...
-            </div>
-            </div>
-        <div class="resizecontainer">
-            <div class="loadingcontainer">
-                
-            </div>
-            <div class="resizeimgtagcontainer">
-                <img id="imagh" style="border-radius: 17px;" src=""></img>
+
+    <main class="py-5 mx-4 flex flex-col sm:flex-row gap-4 sm:max-h-[90vh] sm:h-[90vh] items-center justify-center">
+        <!-- left: resize/crop area -->
+        <section class="resizecontainer sm:w-3/5 md:w-1/2 rounded-lg border border-white/15 bg-white/6 backdrop-blur-xl p-3 flex flex-col">
+            <div id="loadingoverlay" class="loadingoverlay absolute inset-0 rounded-lg z-10002 flex items-center justify-center bg-linear-to-br from-[#04031A] to-[#050242]" style="visibility: visible;">
+                <div class="loadingoverlaytext text-white text-lg font-bold">Loading...</div>
             </div>
 
-           </div>
-           
-           <div class="previewcontainer">
-            <div class="previewcontainerheadline">Preview</div>
-            <div class="livepreview">
-                <canvas id="skin_container" >
-                    
-                </canvas>
-                <div class="disabledpreview">
-                    <div class="disabledpreviewtext">
-                        Preview was disabled.
-                    </div>
-                    <div class="disabledpreviewtextreson">
-                        Reason: Too many skipped frames.
-                    </div>
-                </div>
+            <div class="resizeimgtagcontainer flex-1 rounded-md overflow-hidden">
+                <img id="imagh" src="" alt="To resize" class="w-full h-full object-contain rounded-md">
             </div>
-            <div class="prbtns">
-            <!-- <div class="autocapebutton colpickerbtn" onclick="showcolourpicker()">Custom Colour</div> -->
-            <div class="autocapebutton donebtn">Done</div>
-            <div class="colourmatchingtextandbutton">
-                <div class="colourmatchselectiontext">
-                Colour matching mode:
-            </div>
-            <div class="autocapebutton notopmarginbtn">
-                <div class="colourpickerselect colpickselenabled" id="automaticcolourpickerselect">
-                    Automatic
-                </div>
-                <div class="colourpickerselect custombuttonflex" id="customcolourpickerselect">
-                    <div class="customtext">
-                        Custom
-                    </div>
-                    <input type="color" id="customcolourpicker" class="colourpicker">
-                </div>
-            </div>
-            </div>
-        </div>
-           </div>
-           
+        </section>
 
-        
-    </div>
-    <!-- <canvas id="capecanvas" ></canvas> -->
+        <!-- right: preview + controls -->
+        <aside class="previewcontainer md:w-1/4 flex flex-col gap-4">
+            <h3 class="previewcontainerheadline text-center text-white text-xl font-bold">Preview</h3>
+            <div class="livepreview relative w-full rounded-md bg-white/6 backdrop-blur-xl flex items-center justify-center" style="min-height:200px">
+                <canvas id="skin_container" class="w-full h-full"></canvas>
+
+                <div class="disabledpreview absolute inset-0 rounded-md bg-linear-to-br from-[#04031A] to-[#050242] backdrop-blur-lg z-10001 flex flex-col justify-center items-center text-white" style="visibility:hidden">
+                    <div class="disabledpreviewtext font-bold">Preview was disabled.</div>
+                    <div class="disabledpreviewtextreson">Reason: Your device seems to be too underpowered to run the 3D Preview (too many skipped render frames).</div>
+                </div>
+            </div>
+
+            <div class="prbtns flex flex-col gap-3">
+                <button class="autocapebutton donebtn rounded-lg border border-white/20 bg-green-500/20 hover:bg-green-500/25 h-14 flex items-center justify-center text-white text-lg font-bold shadow-sm hover:scale-102 transition-all">Continue</button>
+
+                <div class="colourmatchingtextandbutton flex flex-col gap-3">
+                    <div class="colourmatchselectiontext text-center text-white font-bold">Colour matching mode:</div>
+                    <div class="autocapebutton notopmarginbtn flex flex-col gap-2 select-none">
+                        <div id="automaticcolourpickerselect" class="colourpickerselect [.colpickselenabled]:bg-blue-400/25 transition-all cursor-pointer colpickselenabled rounded-md border border-white/20 bg-white/6 h-14 flex items-center justify-center text-white font-bold hover:not-focus:scale-102">Automatic</div>
+                        <div id="customcolourpickerselect" class="colourpickerselect [.colpickselenabled]:bg-blue-400/25 transition-all cursor-pointer rounded-md border border-white/20 bg-white/6 h-14 flex items-center justify-between px-4 hover:scale-102">
+                            <div class="customtext text-white font-bold">Custom</div>
+                            <input type="color" id="customcolourpicker" class="colourpicker w-10 h-8" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
     <script>
         gobackbtn = document.getElementsByClassName("goback")[0];
-        gobackbtn.addEventListener('click', () => {
-            window.location.href = "/";
-        });
+        gobackbtn.addEventListener('click', () => { window.location.href = "/"; });
     </script>
+
     <script>
         var countdown = 0;
         var isrendered = false;
@@ -410,7 +100,7 @@
         var image = document.getElementById('imagh');
         var colpop = document.getElementById('colpop');
         var popuppickprevimg = document.getElementById('popuppickprevimg');
-         const queryString = window.location.search;
+        const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const imgsa = urlParams.get('img');
         const stateid = urlParams.get('stateid');
@@ -438,82 +128,67 @@
             customcolourpickerselect.classList.add('colpickselenabled');
         });
 
-
         donebtn.addEventListener("click", function(){
-            if (doneclicked == true) {
-                return;
-            }
+            if (doneclicked == true) return;
             donebtn.innerHTML = '<img src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/preview/90-ring-white-36.svg" height="30px"></img>';
             donebtn.disabled = true;
             doneclicked = true;
-            
-
 
             if (selectedmatchmode == "automatic") {
                 colourmatch = "true";
             } else {
                 colourmatch = "custom&customcolour=" + document.getElementById('customcolourpicker').value.replace("#", "");
             }
-            canvass = cropper.getCroppedCanvas();
-                            canvass.toBlob(function(blob) {
-                                var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "https://media.cloaks.lol/upload", true);
-                            FormDatas = new FormData();
-                            FormDatas.append("file", blob, "img.png");
-                            xhr.send(FormDatas);
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState == 4 && xhr.status == 200) {
-                                    console.log(xhr.responseText);
-                                    jsonsa = JSON.parse(xhr.responseText);
-                                    console.log(jsonsa.path);
-                                    if (isstate == true) {
-                                       const idxhr = new XMLHttpRequest();
-                                        idxhr.open("GET", "/makecape?fromeditor=true&stateid="+ stateid +"&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path, true);
-                                        idxhr.send();
-                                        idxhr.onreadystatechange = function() {
-                                            if (idxhr.readyState == 4 && idxhr.status == 200) {
-                                                console.log(idxhr.responseText);
-                                                const resultjson = JSON.parse(idxhr.responseText);
-                                                if (resultjson.resultid != null) {
-                                                    window.location.href = "/result/" + resultjson.resultid;
-                                                }
-                                            }
-                                        }
-                                        
-                                    } else {
-                                       const idxhr = new XMLHttpRequest();
-                                        idxhr.open("GET", "/makecape?fromeditor=true&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path, true);
-                                        idxhr.send();
-                                        idxhr.onreadystatechange = function() {
-                                            if (idxhr.readyState == 4 && idxhr.status == 200) {
-                                                console.log(idxhr.responseText);
-                                                const resultjson = JSON.parse(idxhr.responseText);
-                                                if (resultjson.resultid != null) {
-                                                    window.location.href = "/result/" + resultjson.resultid;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                if (xhr.readyState == 4 && xhr.status != 200) {
-                                    console.log(xhr.responseText);
-                                    alert("it appears like that the processed file exceeds the 3mb limit, please try again with a smaller file or if you are unsure what to do join the support server!");
-                                    donebutton.innerHTML = 'error';
-                                    donebutton.disabled = true;
+
+            const canvass = (cropper && typeof cropper.getCroppedCanvas === 'function') ? cropper.getCroppedCanvas() : null;
+            if (!canvass) {
+                console.error('Could not get cropped canvas');
+                alert('Unable to read the cropped image. Please try again.');
+                donebtn.disabled = false;
+                donebtn.innerHTML = 'Done';
+                doneclicked = false;
+                return;
+            }
+            canvass.toBlob(function(blob) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://media.autocape.app/upload", true);
+                FormDatas = new FormData();
+                FormDatas.append("file", blob, "img.png");
+                xhr.send(FormDatas);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        jsonsa = JSON.parse(xhr.responseText);
+                        if (isstate == true) {
+                            const idxhr = new XMLHttpRequest();
+                            idxhr.open("GET", "/makecape?fromeditor=true&stateid="+ stateid +"&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path, true);
+                            idxhr.send();
+                            idxhr.onreadystatechange = function() {
+                                if (idxhr.readyState == 4 && idxhr.status == 200) {
+                                    const resultjson = JSON.parse(idxhr.responseText);
+                                    if (resultjson.resultid != null) window.location.href = "/result/" + resultjson.resultid;
                                 }
                             }
-                            });
-                            
+                        } else {
+                            const idxhr = new XMLHttpRequest();
+                            idxhr.open("GET", "/makecape?fromeditor=true&colourmatch=" + colourmatch + "&img=https://media.autocape.app/media/" + jsonsa.path, true);
+                            idxhr.send();
+                            idxhr.onreadystatechange = function() {
+                                if (idxhr.readyState == 4 && idxhr.status == 200) {
+                                    const resultjson = JSON.parse(idxhr.responseText);
+                                    if (resultjson.resultid != null) window.location.href = "/result/" + resultjson.resultid;
+                                }
+                            }
+                        }
+                    }
+                    if (xhr.readyState == 4 && xhr.status != 200) {
+                        alert("Processed file exceeds 3MB limit, try a smaller file.");
+                        donebtn.innerHTML = 'error';
+                        donebtn.disabled = true;
+                    }
+                }
+            });
         })
 
-
-
-        
-
-         
-        
-        
-       
         function resizedwindow() {
             var calcedwith = livepreviewdiv.offsetWidth;
             var calcedheight = livepreviewdiv.offsetWidth;
@@ -525,203 +200,77 @@
         window.addEventListener('resize', resizedwindow);
 
         function doneloading() {
-            
-            
             loadingcontainer.style.animation = "fadeout 100ms ease-in-out forwards";
-            setTimeout(() => {
-                loadingcontainer.style.visibility = "hidden";
-            }, 110);
+            setTimeout(() => { loadingcontainer.style.visibility = "hidden"; }, 110);
         }
 
-        
-        
-
-
-        if (stateid != null) {
-            isstate = true;
-        }
-
-        // if (imgsa == null) {
-        //     window.location.href = "https://dev.cloaks.lol/autocape";
-        // }
-
+        if (stateid != null) isstate = true;
 
         image.src = imgsa;
 
-        var cropper = new Cropper(image, {
-            aspectRatio: 5 / 8,
-            crop(event) {
-                
-                
-              
-                widths = event.detail.width;
-                
-                heights = event.detail.height;
-                
-                
-                countdown = 1;
-                isrendered = false;
-            },
-        });
+        var cropper = new Cropper(image, { aspectRatio: 5/8, crop(event) { widths = event.detail.width; heights = event.detail.height; countdown = 1; isrendered = false; }, });
         var canvas = document.createElement('canvas');
+        canvas.width = 2048; canvas.height = 1024; var ctx = canvas.getContext('2d');
 
-        canvas.width = 2048;
-        canvas.height = 1024;
-        var ctx = canvas.getContext('2d');
+        var image = new Image(); image.crossOrigin = "Anonymous"; image.src = "https://autocape.app/media/previews/previewtexture.png";
+        image.onload = function() { ctx.drawImage(image, 0, 0, 2048, 1024); }
 
-        //get template from url and draw it on canvas
-        var image = new Image();
-        image.crossOrigin = "Anonymous";
-        image.src = "https://autocape.app/media/previews/previewtexture.png";
+        function renderpreviewcapefile() { /* original rendering code preserved */
+            if (isrendered) return;
+            if (countdown > 0) { countdown--; return; }
+            if (isrenderingrn) { skippedframes++; return; }
 
-        image.onload = function() {
-            ctx.drawImage(image, 0, 0, 2048, 1024);
+            if (!cropper || typeof cropper.getCroppedCanvas !== 'function') return;
 
-            
-        }
+            isrenderingrn = true;
+            isrendered = true;
+            const canvass = cropper.getCroppedCanvas();
+            if (!canvass) {
+                console.warn('cropper.getCroppedCanvas() returned null');
+                isrenderingrn = false;
+                return;
+            }
 
-        
-
-
-        function renderpreviewcapefile() {
-            if (isrendered == false) {
-                if (countdown == 0 ) {
-                    if (isrenderingrn == false) {
-                        
-                    isrenderingrn = true
-                    console.log("rendering");
-                    isrendered = true;
-                    canvass = cropper.getCroppedCanvas();
-                    try {
+            try {
                 canvass.toBlob(function(blob) {
-                //draw the image on the canvas
-                var img = new Image();
-                imgsourceurl = URL.createObjectURL(blob);
-                img.src = imgsourceurl;
-                
-                img.onload = function() {
-                    // first draw the space where the image would go black
-                    ctx.fillStyle = "black";
-                    ctx.fillRect(32, 32, 320, 512);
-                    // then draw the image
-                    ctx.drawImage(img, 32, 32, 320, 512);
-                    //set canvas as cape for the preview render
-                    canvas.toBlob(function(blob) {
-                    bloburl = URL.createObjectURL(blob);
-                    skinViewer.loadCape(bloburl);
-                    console.log("completed:00");
-                    isrenderingrn = false;
-                    skippedframes = 0;
-                    doneloading();
-                    //clean up
-                    
-                    try {
-                        URL.revokeObjectURL(imgsourceurl);
-                    } catch (error) {
-                        console.log(error);
-                    }
-                    
-                    img = null;
-
-                    
-                    
-                    
-                    
-                }, 'image/png');
-                    
-                    
-                }
-                })
+                    var img = new Image();
+                    var imgsourceurl = URL.createObjectURL(blob);
+                    img.src = imgsourceurl;
+                    img.onload = function() {
+                        ctx.fillStyle = 'black';
+                        ctx.fillRect(32,32,320,512);
+                        ctx.drawImage(img,32,32,320,512);
+                        canvas.toBlob(function(resultBlob) {
+                            var bloburl = URL.createObjectURL(resultBlob);
+                            if (typeof skinViewer !== 'undefined' && skinViewer && typeof skinViewer.loadCape === 'function') {
+                                skinViewer.loadCape(bloburl);
+                            }
+                            isrenderingrn = false;
+                            skippedframes = 0;
+                            doneloading();
+                            try { URL.revokeObjectURL(imgsourceurl); } catch(e) { console.error(e); }
+                            img = null;
+                        }, 'image/png');
+                    };
+                });
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 isrenderingrn = false;
             }
-                
-            }
-            else
-            {
-                console.log("rendering... skipping frame");
-                skippedframes = skippedframes + 1;
-            }
-                }
-                else
-                {
-                    countdown = countdown - 1;
-                }
-            }
-            
         }
 
-        setInterval(() => {
-            if (renderingenbaled == true) {
-                
-            
-            if (skippedframes < 10) {
-                renderpreviewcapefile();
-                
-            }
-            else
-            {
-                disablerendering();
-            }
-        }
-        }, 100);
-        const livepreviewdiv = document.getElementsByClassName("livepreview")[0];
-        const skincontainer = document.getElementById("skin_container");
+        setInterval(() => { if (renderingenbaled == true) { if (skippedframes < 10) renderpreviewcapefile(); else disablerendering(); } }, 100);
+        const livepreviewdiv = document.getElementsByClassName('livepreview')[0];
+        const skincontainer = document.getElementById('skin_container');
 
+        function disablerendering(reason) { isrendered = true; renderingenbaled = false; canvas = null; skincontainer.remove(); }
 
-        function disablerendering(reason) {
-            isrendered = true;
-            renderingenbaled = false;
-            console.log("disabling rendering");
-            //delete canvas
-            canvas = null;
-            //delete skincontainer
-            skincontainer.remove();
-            
-        }
+        const calcedwith = livepreviewdiv.offsetWidth; const calcedheight = livepreviewdiv.offsetWidth; livepreviewdiv.height = calcedheight;
 
-        
-        
+        let skinViewer = new skinview3d.SkinViewer({ canvas: document.getElementById('skin_container'), width: calcedwith, height: calcedheight, skin: "https://mineskin.eu/skin/Felixmax_" });
+        skinViewer.camera.rotation.z = -3; skinViewer.camera.rotation.y = 0; skinViewer.camera.rotation.x = -2; skinViewer.camera.position.z = -33; skinViewer.camera.position.y = 8; skinViewer.camera.position.x = -1; skinViewer.fov = 65; skinViewer.animation = new skinview3d.IdleAnimation();
 
-        const calcedwith = livepreviewdiv.offsetWidth;
-        const calcedheight = livepreviewdiv.offsetWidth;
-
-        livepreviewdiv.height = calcedheight;
-
-        let skinViewer = new skinview3d.SkinViewer({
-		canvas: document.getElementById("skin_container"),
-        width: calcedwith,
-        height: calcedheight,
-		skin: "https://mineskin.eu/skin/Felixmax_"
-	});
-        skinViewer.camera.rotation.z = -3
-        skinViewer.camera.rotation.y = 0
-        skinViewer.camera.rotation.x = -2
-        skinViewer.camera.position.z = -33
-        skinViewer.camera.position.y = 8
-        skinViewer.camera.position.x = -1
-        skinViewer.fov = 65;
-        
-        skinViewer.animation = new skinview3d.IdleAnimation();
-
-
-
-        // if s key is pressed
-        document.addEventListener('keydown', function(event) {
-            if (event.keyCode == 83) {
-                var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='https://mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);
-            }
-            if (event.keyCode == 80) {
-                            document.body.style.background = "pink";
-                            alert("femboy mode activated")
-                        }
-        });
-
-        
-    
-
-    
+        document.addEventListener('keydown', function(event) { if (event.keyCode == 83) { var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='https://mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script); } if (event.keyCode == 80) { document.body.style.background = "pink"; alert("femboy mode activated") } });
     </script>
 </body>
 </html>
