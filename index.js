@@ -31,7 +31,7 @@ if (!fs.existsSync(resultsDir)) {
 }
 
 function renderError(errorMessage, displayError) {
-    const htmlData = fs.readFileSync(path.join(__dirname, "cloakslol/error.html"), 'utf8');
+    const htmlData = fs.readFileSync(path.join(__dirname, "pages/error.html"), 'utf8');
     const errorTime = `${errorMessage} @ ${Date.now()}`;
     const errorId = `Autocape:${generateResultId(15)}`;
     
@@ -51,16 +51,16 @@ function generateResultId(length) {
     return result + Date.now();
 }
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'cloakslol/autocape.html')));
-app.get('/resize', (req, res) => res.sendFile(path.join(__dirname, "cloakslol/resizerui.html")));
-app.get('/js/localize.js', (req, res) => res.sendFile(path.join(__dirname, "cloakslol/localize.js")));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'pages/autocape.html')));
+app.get('/resize', (req, res) => res.sendFile(path.join(__dirname, "pages/resizerui.html")));
+app.get('/js/localize.js', (req, res) => res.sendFile(path.join(__dirname, "pages/localize.js")));
 
 ['/discord', '/support', '/help'].forEach(route => {
     app.get(route, (req, res) => res.redirect("https://discord.gg/MT6TpR7rqZ"));
 });
 
 app.get('/localize/:languagecode/:pageid', (req, res) => {
-    const filePath = path.join(__dirname, "cloakslol/localizejs", req.params.languagecode, `${req.params.pageid}.json`);
+    const filePath = path.join(__dirname, "pages/localizejs", req.params.languagecode, `${req.params.pageid}.json`);
     if (fs.existsSync(filePath)) {
         res.sendFile(filePath);
     } else {
@@ -107,7 +107,7 @@ app.get("/result/:id", (req, res) => {
         return res.send(renderError(`Error: 404 - Not found @ /result/:id :id ${id}`, "404"));
     }
 
-    const htmlData = fs.readFileSync(path.join(__dirname, "cloakslol/result.html"), 'utf8');
+    const htmlData = fs.readFileSync(path.join(__dirname, "pages/result.html"), 'utf8');
     const targetUrl = `http://${fullUrl}/cape/${id}`;
     
     const replaced = htmlData
