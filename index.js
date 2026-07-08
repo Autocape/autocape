@@ -71,13 +71,13 @@ app.get('/localize/:languagecode/:pageid', (req, res) => {
 
 app.get("/cape/:id", (req, res) => {
     const id = req.params.id;
-    if (!id) return res.send(renderError("Error: 400 - malformed @ /cape : no valid params passed", "400"));
+    if (!id) return res.send(renderError("Error: 400 - malformed @ /cape : no valid params passed", "400 - Malformed Data"));
 
     const file = path.join(resultsDir, `${id}.png`);
     if (fs.existsSync(file)) {
         res.sendFile(file);
     } else {
-        res.send(renderError(`Error: 404 - Not found @ /cape : id ${id} ip: ${req.ip}`, "404 - The page you were looking for was not found."));
+        res.send(renderError(`Error: 404 - Not found @ /cape : id ${id} ip: ${req.ip}`, "404 - The page you requested was not found."));
     }
 });
 
@@ -93,19 +93,19 @@ app.get('/authendpoint', async (req, res) => {
         res.send(user);
     } catch (err) {
         console.error(err);
-        res.send(renderError(`Error: 500 - Internal server error @ /authendpoint : ${err}`, "500"));
+        res.send(renderError(`Error: 500 - Internal server error @ /authendpoint : ${err}`, "500 - Internal Server Error"));
     }
 });
 
-app.get('/result', (req, res) => res.send(renderError("Error: 400 - Malformed @ /result : no valid params passed", "400")));
+app.get('/result', (req, res) => res.send(renderError("Error: 400 - Malformed @ /result : no valid params passed", "400 - Malformed Data")));
 
 app.get("/result/:id", (req, res) => {
     const id = req.params.id;
-    if (!id) return res.send(renderError(`Error: 400 - Malformed @ /result/:id :id ${id}`, "400"));
+    if (!id) return res.send(renderError(`Error: 400 - Malformed @ /result/:id :id ${id}`, "400 - Malformed Data"));
 
     const file = path.join(resultsDir, `${id}.png`);
     if (!fs.existsSync(file)) {
-        return res.send(renderError(`Error: 404 - Not found @ /result/:id :id ${id}`, "404 - the page you requested was not found."));
+        return res.send(renderError(`Error: 404 - Not found @ /result/:id :id ${id}`, "404 - The page you requested was not found."));
     }
 
     const htmlData = fs.readFileSync(path.join(__dirname, "pages/result.html"), 'utf8');
@@ -126,7 +126,7 @@ app.get('/makecape', async (req, res) => {
     const baseImageLocation = req.query.img;
     const startTime = Date.now();
 
-    if (!baseImageLocation) return res.json({ err: "noimg" });
+    if (!baseImageLocation) return res.json({ err: "missingimg" });
     if (!baseImageLocation.endsWith('.png')) return res.json({ err: "notfound" });
     if (!baseImageLocation.startsWith('http')) return res.json({ err: "disallowedprotocol" });
 

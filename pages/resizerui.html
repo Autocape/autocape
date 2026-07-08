@@ -170,6 +170,13 @@
                                 if (idxhr.readyState == 4 && idxhr.status == 200) {
                                     const resultjson = JSON.parse(idxhr.responseText);
                                     if (resultjson.resultid != null) window.location.href = "/result/" + resultjson.resultid;
+                                } else if(idxhr.readyState == 4) {
+                                    const resultjson = JSON.parse(idxhr.responseText)
+                                    if(resultjson.err) {
+                                        console.log(resultjson)
+                                        alert('Something went wrong while submitting your cape.')
+                                        return;
+                                    }
                                 }
                             }
                         } else {
@@ -180,12 +187,19 @@
                                 if (idxhr.readyState == 4 && idxhr.status == 200) {
                                     const resultjson = JSON.parse(idxhr.responseText);
                                     if (resultjson.resultid != null) window.location.href = "/result/" + resultjson.resultid;
+                                } else if(idxhr.readyState == 4) {
+                                    const resultjson = JSON.parse(idxhr.responseText)
+                                    if(resultjson.err) {
+                                        console.log(resultjson)
+                                        alert('Something went wrong while submitting your cape.')
+                                        return;
+                                    }
                                 }
                             }
                         }
                     }
                     if (xhr.readyState == 4 && xhr.status != 200) {
-                        alert("Processed file exceeds 3MB limit, try a smaller file.");
+                        alert("Processed image file exceeds 3MB file size limit, please try using a smaller image file.");
                         donebtn.innerHTML = 'error';
                         donebtn.disabled = true;
                     }
