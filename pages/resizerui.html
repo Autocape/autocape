@@ -48,9 +48,9 @@
         </div>
     </div>
 
-    <main class="py-5 mx-4 flex flex-col sm:flex-row gap-4 sm:max-h-[90vh] sm:h-[90vh] items-center justify-center">
+    <main class="py-5 mx-4 flex flex-col sm:flex-row gap-4 sm:h-[calc(100vh-82px)] items-center justify-center">
         <!-- left: resize/crop area -->
-        <section class="resizecontainer  rounded-lg border border-white/15 bg-white/6 backdrop-blur-xl p-3 flex flex-col w-full h-full w-[100%]">
+        <section class="resizecontainer rounded-lg border border-white/15 bg-white/6 backdrop-blur-xl p-3 flex flex-col w-full h-full">
             <div id="loadingoverlay" class="loadingoverlay absolute inset-0 rounded-lg z-10002 flex items-center justify-center bg-linear-to-br from-[#04031A] to-[#050242]" style="visibility: visible;">
                 <div class="loadingoverlaytext text-white text-lg font-bold">Loading...</div>
             </div>
@@ -78,8 +78,8 @@
                 <div class="colourmatchingtextandbutton flex flex-col gap-3">
                     <div class="colourmatchselectiontext text-center text-white font-bold">Colour matching mode:</div>
                     <div class="autocapebutton notopmarginbtn flex flex-col gap-2 select-none">
-                        <div id="automaticcolourpickerselect" class="colourpickerselect [.colpickselenabled]:bg-blue-400/25 transition-all cursor-pointer colpickselenabled rounded-md border border-white/20 bg-white/6 h-14 flex items-center justify-center text-white font-bold hover:not-focus:scale-102">Automatic</div>
-                        <div id="customcolourpickerselect" class="colourpickerselect [.colpickselenabled]:bg-blue-400/25 transition-all cursor-pointer rounded-md border border-white/20 bg-white/6 h-14 flex items-center justify-between px-4 hover:scale-102">
+                        <div id="automaticcolourpickerselect" class="colourpickerselect [.colpickselenabled]:bg-blue-400/25 transition-all cursor-pointer colpickselenabled rounded-lg border border-white/20 bg-white/6 h-14 flex items-center justify-center text-white font-bold hover:not-focus:scale-102">Automatic</div>
+                        <div id="customcolourpickerselect" class="colourpickerselect [.colpickselenabled]:bg-blue-400/25 transition-all cursor-pointer rounded-lg border border-white/20 bg-white/6 h-14 flex items-center justify-between px-4 hover:scale-102">
                             <div class="customtext text-white font-bold">Custom</div>
                             <input type="color" id="customcolourpicker" class="colourpicker w-10 h-8" />
                         </div>
