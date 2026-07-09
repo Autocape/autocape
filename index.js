@@ -31,9 +31,10 @@ if (!fs.existsSync(resultsDir)) {
 }
 
 function renderError(errorMessage, displayError) {
-    const htmlData = fs.readFileSync(path.join(__dirname, "cloakslol/error.html"), 'utf8');
-    const errorTime = `${errorMessage} @ ${Date.now()}`;
-    const errorId = `Autocape:${generateResultId(15)}`;
+    const htmlData = fs.readFileSync(path.join(__dirname, "pages/error.html"), 'utf8');
+    const errorId = `AC:${generateResultId(15)}`;
+    const errorTime = `${errorId} - ${errorMessage} @ ${Date.now()}`;
+
     
     console.error(errorTime);
     
@@ -51,16 +52,16 @@ function generateResultId(length) {
     return result + Date.now();
 }
 
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'cloakslol/autocape.html')));
-app.get('/resize', (req, res) => res.sendFile(path.join(__dirname, "cloakslol/resizerui.html")));
-app.get('/js/localize.js', (req, res) => res.sendFile(path.join(__dirname, "cloakslol/localize.js")));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'pages/autocape.html')));
+app.get('/resize', (req, res) => res.sendFile(path.join(__dirname, "pages/resizerui.html")));
+app.get('/js/localize.js', (req, res) => res.sendFile(path.join(__dirname, "pages/localize.js")));
 
 ['/discord', '/support', '/help'].forEach(route => {
     app.get(route, (req, res) => res.redirect("https://discord.gg/MT6TpR7rqZ"));
 });
 
 app.get('/localize/:languagecode/:pageid', (req, res) => {
-    const filePath = path.join(__dirname, "cloakslol/localizejs", req.params.languagecode, `${req.params.pageid}.json`);
+    const filePath = path.join(__dirname, "pages/localizejs", req.params.languagecode, `${req.params.pageid}.json`);
     if (fs.existsSync(filePath)) {
         res.sendFile(filePath);
     } else {
@@ -70,13 +71,13 @@ app.get('/localize/:languagecode/:pageid', (req, res) => {
 
 app.get("/cape/:id", (req, res) => {
     const id = req.params.id;
-    if (!id) return res.send(renderError("Error: 400 - malformed @ /cape : no valid params passed", "400"));
+    if (!id) return res.send(renderError("Error: 400 - malformed @ /cape : no valid params passed", "400 - Malformed Data"));
 
     const file = path.join(resultsDir, `${id}.png`);
     if (fs.existsSync(file)) {
         res.sendFile(file);
     } else {
-        res.send(renderError(`Error: 404 - Not found @ /cape : id ${id} ip: ${req.ip}`, "404"));
+        res.send(renderError(`Error: 404 - Not found @ /cape : id ${id} ip: ${req.ip}`, "404 - The page you requested was not found."));
     }
 });
 
@@ -92,22 +93,22 @@ app.get('/authendpoint', async (req, res) => {
         res.send(user);
     } catch (err) {
         console.error(err);
-        res.send(renderError(`Error: 500 - Internal server error @ /authendpoint : ${err}`, "500"));
+        res.send(renderError(`Error: 500 - Internal server error @ /authendpoint : ${err}`, "500 - Internal Server Error"));
     }
 });
 
-app.get('/result', (req, res) => res.send(renderError("Error: 400 - Malformed @ /result : no valid params passed", "400")));
+app.get('/result', (req, res) => res.send(renderError("Error: 400 - Malformed @ /result : no valid params passed", "400 - Malformed Data")));
 
 app.get("/result/:id", (req, res) => {
     const id = req.params.id;
-    if (!id) return res.send(renderError(`Error: 400 - Malformed @ /result/:id :id ${id}`, "400"));
+    if (!id) return res.send(renderError(`Error: 400 - Malformed @ /result/:id :id ${id}`, "400 - Malformed Data"));
 
     const file = path.join(resultsDir, `${id}.png`);
     if (!fs.existsSync(file)) {
-        return res.send(renderError(`Error: 404 - Not found @ /result/:id :id ${id}`, "404"));
+        return res.send(renderError(`Error: 404 - Not found @ /result/:id :id ${id}`, "404 - The page you requested was not found."));
     }
 
-    const htmlData = fs.readFileSync(path.join(__dirname, "cloakslol/result.html"), 'utf8');
+    const htmlData = fs.readFileSync(path.join(__dirname, "pages/result.html"), 'utf8');
     const targetUrl = `http://${fullUrl}/cape/${id}`;
     
     const replaced = htmlData
@@ -125,14 +126,14 @@ app.get('/makecape', async (req, res) => {
     const baseImageLocation = req.query.img;
     const startTime = Date.now();
 
-    if (!baseImageLocation) return res.json({ err: "noimg" });
+    if (!baseImageLocation) return res.json({ err: "missingimg" });
     if (!baseImageLocation.endsWith('.png')) return res.json({ err: "notfound" });
-    if (!baseImageLocation.startsWith('http')) return res.json({ err: "localdenied" });
+    if (!baseImageLocation.startsWith('http')) return res.json({ err: "disallowedprotocol" });
 
     try {
         const response = await axios.get(baseImageLocation, {
             responseType: 'arraybuffer',
-            headers: { 'User-Agent': 'Autocape/AutocapeBot (Support:discord.gg/wxRatfNSwz) Axios/1.4.0' }
+            headers: { 'User-Agent': 'Autocape/Autocape-Bot (Support: discord.gg/wxRatfNSwz, Contact/Abuse: https://slashonline.net/contact) Axios/1.4.0' }
         });
 
         const outputBuffer = await generateCape(response.data, {
@@ -251,13 +252,13 @@ async function generateCape(imageBuffer, options) {
                 .title { fill: #FF0000; font-size: 15px; font-weight: bold;}
             </style>
             <text font-family="Arial, Helvetica, sans-serif" x="5px" y="900px" class="title">${config.version}</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="920px" class="title">[AUTOCAPE DEBUG]</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="940px" class="title">IMGURL:${options.baseImageLocation}</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="960px" class="title">format:${format} height:${heightOg} width:${widthOg} aspectratioog:${aspectRatioOg} aspectratiorounded:${aspectRatio} calculatedcolour:${hexColor} colourcalculationmodus:${options.useColorMatch}</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="980px" class="title">host:${config.hostname}</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="1000px" class="title">rendertime(not counting debuginfo):${renderTime}ms</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="1700px" y="1000px" class="title">DEBUG BUILD : NOT PRODUCTION READY</text>
-            <text font-family="Arial, Helvetica, sans-serif" x="1700px" y="940px" class="title">DEBUG BUILD : NOT PRODUCTION READY</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="920px" class="title">[AUTOCAPE DEV MODE]</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="940px" class="title">SOURCE URL: ${options.baseImageLocation}</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="960px" class="title">File format: ${format}; IMG height: ${heightOg}; IMG width: ${widthOg}; IMG og aspect ratio: ${aspectRatioOg}; IMG aspect ratio rounded: ${aspectRatio}; Calculated color: #${hexColor}; Color calc mode: ${options.useColorMatch}</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="980px" class="title">Server Host: ${config.hostname}</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="5px" y="1000px" class="title">Render time (not counting debuginfo): ${renderTime}ms</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="1500px" y="1000px" class="title">DEVELOPER BUILD: NOT PRODUCTION READY - WORK IN PROGRESS</text>
+            <text font-family="Arial, Helvetica, sans-serif" x="1500px" y="950px" class="title">DEVELOPER BUILD: NOT PRODUCTION READY - WORK IN PROGRESS</text>
         </svg>
         `;
         overlayBuffer = await sharp(overlayBuffer)

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autocape - Result</title>
+    <link rel="icon" type="image/x-icon" href="https://slashonline.net/media/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://bs-community.github.io/skinview3d/js/skinview3d.bundle.js"></script>
+    <meta name="description" content="Autocape Result | Automatic cape Generator">
+    <meta property="og:title" content="Autocape Result" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://dev.cloaks.lol/autocape" />
+    <meta property="og:image" content="{{imgurl}}" />
+    <meta property="og:description" content="Your custom cape generated fast, easy and for free" />
+    <meta name="theme-color" content="#c400fa">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * {
+            font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            background: #04031A;
+        }
+
+        .thankyou {
+            filter: drop-shadow(0 0 32px rgba(18, 174, 232, 0.4));
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-linear-to-br from-[#04031A] to-[#050242] m-0 text-white font-sans">
+    <div class="headder border-b border-white/15 bg-linear-to-r from-white/6 to-transparent bg-[rgba(255,255,255,0.05)] backdrop-blur-xl h-20 flex items-center px-4 select-none">
+        <div class="goback top-9 sm:top-8 left-5 sm:left-7 text-white/40 select-none cursor-pointer absolute flex items-center justify-center gap-4 opacity-80 hover:opacity-100 transition-all">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="16" viewBox="0 0 9 16" fill="none"><path d="M0.360901 7.29289C-0.029623 7.68342 -0.029623 8.31658 0.360901 8.70711L6.72486 15.0711C7.11539 15.4616 7.74855 15.4616 8.13908 15.0711C8.5296 14.6805 8.5296 14.0474 8.13908 13.6569L2.48222 8L8.13908 2.34315C8.5296 1.95262 8.5296 1.31946 8.13908 0.928932C7.74855 0.538408 7.11539 0.538408 6.72486 0.928932L0.360901 7.29289ZM2.0694 7H1.06801L1.06801 9H2.0694V7Z" fill="white" fill-opacity="0.39"/></svg>
+            </div>
+            <div class="hidden sm:block text-sm mt-px">Go Back</div>
+        </div>
+
+        <div class="mx-auto">
+            <img src="https://media.autocape.app/media/n7leGMmIzGlOloDzB4X580ECB1783358474181/iGZHfHlfNs3376.png" alt="Autocape Logo" class="h-10 object-contain">
+        </div>
+    </div>
+
+    <main class="mx-4 mt-6 p-5 min-h-[calc(100vh-120px)] flex items-center justify-center flex-col">
+        <div class="thankyou text-center text-3xl font-semibold text-[#12AEE8] flex flex-row gap-2 items-center justify-center">
+            Thanks for using AutoCape!
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" /></svg>
+        </div>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div class="livepreview rounded-[17px] border border-white/15 bg-white/6 backdrop-blur-xl h-[50vh] min-h-[280px] overflow-hidden flex items-center justify-center aspect-square min-w-fit">
+                <canvas id="skin_container" class="w-full h-full"></canvas>
+            </div>
+            <div class="rounded-[17px] border border-white/15 bg-white/6 backdrop-blur-xl h-[50vh] min-h-[280px] overflow-hidden flex items-center justify-center p-3">
+                <img src="{{imgurl2}}" id="imgprev" class="h-full w-full object-contain rounded-[17px]" alt="Cape preview">
+            </div>
+        </div>
+
+        <div class="mt-10 flex justify-center">
+            <button class="downloadbutton rounded-2xl border border-white/20 bg-blue-500/10 px-8 py-4 text-white text-base font-semibold shadow-sm transition-all hover:bg-blue-500/15 hover:scale-102 cursor-pointer flex items-center justify-center gap-3 flex-row ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+                Download Cape Texture
+            </button>
+        </div>
+    </main>
+
+    <script>
+        const livepreviewdiv = document.getElementsByClassName("livepreview")[0];
+        const imgprev = document.getElementById("imgprev");
+        const imgprevsrc = imgprev.src;
+
+        const calcedwith = livepreviewdiv.offsetWidth;
+        const calcedheight = livepreviewdiv.offsetHeight;
+
+        let skinViewer = new skinview3d.SkinViewer({
+		canvas: document.getElementById("skin_container"),
+        width: calcedwith,
+        height: calcedheight,
+		skin: "https://mineskin.eu/skin/Felixmax_"
+	});
+        skinViewer.camera.rotation.z = -3.05
+        skinViewer.camera.rotation.y = -0.5
+        skinViewer.camera.rotation.x = -3.025
+        skinViewer.camera.position.z = -30
+        skinViewer.camera.position.y = 2.75
+        skinViewer.camera.position.x = -15
+        skinViewer.fov = 65;
+        skinViewer.loadCape(imgprevsrc);
+        skinViewer.animation = new skinview3d.IdleAnimation();
+    </script>
+    <script>
+        const downloadbutton = document.getElementsByClassName("downloadbutton")[0];
+        const imgprev2 = document.getElementById("imgprev");
+        const imgprevsrc2 = imgprev2.src;
+
+        downloadbutton.addEventListener('click', () => {
+            fetch(imgprevsrc2)
+                .then(response => response.blob())
+                .then(blob => {
+                    if (!blob) {
+                        console.error('Failed to download image blob');
+                        return;
+                    }
+                    const link = document.createElement('a');
+                    const url = window.URL.createObjectURL(blob);
+                    link.href = url;
+                    link.download = 'autocape.png';
+                    link.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => console.error('Download failed', error));
+        });
+    </script>
+    <script>
+        gobackbtn = document.getElementsByClassName("goback")[0];
+        gobackbtn.addEventListener('click', () => {
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>
